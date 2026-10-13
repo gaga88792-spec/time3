@@ -1,0 +1,2870 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>보조개샘 전자칠판 2026.4.8.</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Dokdo&family=Dongle:wght@400;700&family=Gaegu:wght@400;700&family=Gowun+Dodum&family=Gugi&family=Hi+Melody&family=Jua&family=Nanum+Gothic:wght@400;700;800&family=Poor+Story&display=swap');
+
+        :root {
+            --bg: linear-gradient(180deg, #e8f5ff 0%, #cfe7ff 48%, #bddcff 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.94), transparent 44%);
+            --text: #102742;
+            --sub: #466887;
+            --panel: rgba(255,255,255,0.72);
+            --panel-strong: rgba(255,255,255,0.9);
+            --line: rgba(16,39,66,0.12);
+            --accent: #0f62fe;
+            --accent-2: #0039a6;
+            --accent-shadow: rgba(15,98,254,0.24);
+            --shadow: 0 18px 48px rgba(29,78,137,0.16);
+            --font-main: 'Jua', 'Nanum Gothic', sans-serif;
+            --fit-scale: 1;
+            --hero-scale: 1;
+            --weather-scale: 1;
+            --status-scale: 1;
+            --schedule-scale: 1;
+            --meal-scale: 1;
+        }
+
+        body.theme-sky {
+            --bg: linear-gradient(180deg, #e8f5ff 0%, #cfe7ff 48%, #bddcff 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.94), transparent 44%);
+            --text: #102742; --sub: #466887; --panel: rgba(255,255,255,0.72); --panel-strong: rgba(255,255,255,0.9);
+            --line: rgba(16,39,66,0.12); --accent: #0f62fe; --accent-2: #0039a6; --accent-shadow: rgba(15,98,254,0.24);
+            --shadow: 0 18px 48px rgba(29,78,137,0.16);
+        }
+        body.theme-sand {
+            --bg: linear-gradient(180deg, #fff7ef 0%, #ffe5c8 52%, #ffd3ad 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.96), transparent 44%);
+            --text: #462615; --sub: #83543a; --panel: rgba(255,255,255,0.74); --panel-strong: rgba(255,255,255,0.92);
+            --line: rgba(70,38,21,0.12); --accent: #d97706; --accent-2: #9a3412; --accent-shadow: rgba(154,52,18,0.22);
+            --shadow: 0 18px 48px rgba(110,70,35,0.16);
+        }
+        body.theme-forest {
+            --bg: linear-gradient(180deg, #ecfff1 0%, #cbf2d8 48%, #a7e2bf 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.93), transparent 44%);
+            --text: #103529; --sub: #2f5b4d; --panel: rgba(255,255,255,0.72); --panel-strong: rgba(255,255,255,0.9);
+            --line: rgba(16,53,41,0.12); --accent: #0f9d58; --accent-2: #0b6b3a; --accent-shadow: rgba(11,107,58,0.22);
+            --shadow: 0 18px 48px rgba(28,97,65,0.18);
+        }
+        body.theme-sunset {
+            --bg: linear-gradient(180deg, #fff1ea 0%, #ffd9ca 52%, #ffbd9d 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.95), transparent 44%);
+            --text: #4a1f14; --sub: #8a4a34; --panel: rgba(255,255,255,0.74); --panel-strong: rgba(255,255,255,0.92);
+            --line: rgba(74,31,20,0.12); --accent: #f97316; --accent-2: #c2410c; --accent-shadow: rgba(194,65,12,0.24);
+            --shadow: 0 18px 48px rgba(154,87,50,0.18);
+        }
+        body.theme-ocean {
+            --bg: linear-gradient(180deg, #ddfbff 0%, #c0efff 46%, #9de0ff 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.93), transparent 44%);
+            --text: #083344; --sub: #155e75; --panel: rgba(255,255,255,0.72); --panel-strong: rgba(255,255,255,0.9);
+            --line: rgba(8,51,68,0.12); --accent: #0891b2; --accent-2: #155e75; --accent-shadow: rgba(8,145,178,0.24);
+            --shadow: 0 18px 48px rgba(21,94,117,0.18);
+        }
+        body.theme-lemon {
+            --bg: linear-gradient(180deg, #fffde8 0%, #fff4bb 48%, #ffe68d 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.97), transparent 44%);
+            --text: #413504; --sub: #7d6906; --panel: rgba(255,255,255,0.78); --panel-strong: rgba(255,255,255,0.94);
+            --line: rgba(65,53,4,0.12); --accent: #ca8a04; --accent-2: #a16207; --accent-shadow: rgba(161,98,7,0.23);
+            --shadow: 0 18px 48px rgba(147,121,30,0.17);
+        }
+        body.theme-ink {
+            --bg: linear-gradient(180deg, #152238 0%, #1b2f4d 50%, #21375b 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.12), transparent 40%);
+            --text: #f7fbff; --sub: #d2e0f4; --panel: rgba(10,19,34,0.52); --panel-strong: rgba(18,30,50,0.84);
+            --line: rgba(255,255,255,0.12); --accent: #38bdf8; --accent-2: #0ea5e9; --accent-shadow: rgba(14,165,233,0.24);
+            --shadow: 0 18px 48px rgba(4,9,18,0.32);
+        }
+        body.theme-blossom {
+            --bg: linear-gradient(180deg, #fff3f7 0%, #ffdce8 50%, #ffc1d7 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.97), transparent 44%);
+            --text: #541b31; --sub: #8a4662; --panel: rgba(255,255,255,0.76); --panel-strong: rgba(255,255,255,0.93);
+            --line: rgba(84,27,49,0.12); --accent: #ec4899; --accent-2: #be185d; --accent-shadow: rgba(190,24,93,0.24);
+            --shadow: 0 18px 48px rgba(145,62,97,0.18);
+        }
+        body.theme-mint {
+            --bg: linear-gradient(180deg, #effff9 0%, #cdf8eb 48%, #a9edd9 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.95), transparent 44%);
+            --text: #0f4d3d; --sub: #327260; --panel: rgba(255,255,255,0.74); --panel-strong: rgba(255,255,255,0.92);
+            --line: rgba(15,77,61,0.12); --accent: #10b981; --accent-2: #0f766e; --accent-shadow: rgba(15,118,110,0.22);
+            --shadow: 0 18px 48px rgba(40,112,95,0.18);
+        }
+        body.theme-peach {
+            --bg: linear-gradient(180deg, #fff6ee 0%, #ffd9c4 52%, #ffbf9e 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.95), transparent 44%);
+            --text: #5c2f12; --sub: #935237; --panel: rgba(255,255,255,0.75); --panel-strong: rgba(255,255,255,0.92);
+            --line: rgba(92,47,18,0.12); --accent: #fb923c; --accent-2: #ea580c; --accent-shadow: rgba(234,88,12,0.22);
+            --shadow: 0 18px 48px rgba(158,95,57,0.18);
+        }
+        body.theme-cocoa {
+            --bg: linear-gradient(180deg, #fff9f4 0%, #e3c9b1 50%, #c79f7f 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.94), transparent 44%);
+            --text: #3a2417; --sub: #6f4a35; --panel: rgba(255,255,255,0.72); --panel-strong: rgba(255,255,255,0.9);
+            --line: rgba(58,36,23,0.12); --accent: #a16207; --accent-2: #78350f; --accent-shadow: rgba(120,53,15,0.22);
+            --shadow: 0 18px 48px rgba(118,79,53,0.18);
+        }
+        body.theme-lime {
+            --bg: linear-gradient(180deg, #fbffe8 0%, #e6f6b9 48%, #d2ec7d 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.96), transparent 44%);
+            --text: #33410c; --sub: #65711f; --panel: rgba(255,255,255,0.77); --panel-strong: rgba(255,255,255,0.93);
+            --line: rgba(51,65,12,0.12); --accent: #84cc16; --accent-2: #4d7c0f; --accent-shadow: rgba(77,124,15,0.22);
+            --shadow: 0 18px 48px rgba(116,139,43,0.18);
+        }
+        body.theme-lagoon {
+            --bg: linear-gradient(180deg, #ebfffe 0%, #c4f4ef 48%, #95e2db 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.95), transparent 44%);
+            --text: #0c3b39; --sub: #2b6b66; --panel: rgba(255,255,255,0.74); --panel-strong: rgba(255,255,255,0.92);
+            --line: rgba(12,59,57,0.12); --accent: #14b8a6; --accent-2: #0f766e; --accent-shadow: rgba(15,118,110,0.22);
+            --shadow: 0 18px 48px rgba(49,116,109,0.18);
+        }
+        body.theme-coral {
+            --bg: linear-gradient(180deg, #fff1ee 0%, #ffd2c7 48%, #ffb19d 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.96), transparent 44%);
+            --text: #51261c; --sub: #87493b; --panel: rgba(255,255,255,0.75); --panel-strong: rgba(255,255,255,0.92);
+            --line: rgba(81,38,28,0.12); --accent: #f97316; --accent-2: #dc2626; --accent-shadow: rgba(220,38,38,0.2);
+            --shadow: 0 18px 48px rgba(156,88,72,0.18);
+        }
+        body.theme-lilac {
+            --bg: linear-gradient(180deg, #f6f2ff 0%, #e1d8ff 48%, #cabaff 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.96), transparent 44%);
+            --text: #31234f; --sub: #66548a; --panel: rgba(255,255,255,0.76); --panel-strong: rgba(255,255,255,0.93);
+            --line: rgba(49,35,79,0.12); --accent: #8b5cf6; --accent-2: #6d28d9; --accent-shadow: rgba(109,40,217,0.2);
+            --shadow: 0 18px 48px rgba(103,81,150,0.18);
+        }
+        body.theme-slate {
+            --bg: linear-gradient(180deg, #1a2333 0%, #263247 48%, #374861 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.14), transparent 40%);
+            --text: #f7fbff; --sub: #d3dbea; --panel: rgba(12,19,31,0.54); --panel-strong: rgba(20,29,44,0.84);
+            --line: rgba(255,255,255,0.12); --accent: #8ab4ff; --accent-2: #4f7dd6; --accent-shadow: rgba(79,125,214,0.24);
+            --shadow: 0 18px 48px rgba(6,10,18,0.34);
+        }
+        body.theme-cream {
+            --bg: linear-gradient(180deg, #fffef6 0%, #fff3d2 48%, #ffe6ab 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.98), transparent 44%);
+            --text: #4a3a12; --sub: #81652a; --panel: rgba(255,255,255,0.79); --panel-strong: rgba(255,255,255,0.95);
+            --line: rgba(74,58,18,0.12); --accent: #d4a017; --accent-2: #b7791f; --accent-shadow: rgba(183,121,31,0.22);
+            --shadow: 0 18px 48px rgba(150,120,49,0.18);
+        }
+        body.theme-ruby {
+            --bg: linear-gradient(180deg, #fff2f5 0%, #ffc9d6 48%, #ff9fb5 100%);
+            --glow: radial-gradient(circle at top left, rgba(255,255,255,0.97), transparent 44%);
+            --text: #5a1528; --sub: #93415a; --panel: rgba(255,255,255,0.76); --panel-strong: rgba(255,255,255,0.93);
+            --line: rgba(90,21,40,0.12); --accent: #e11d48; --accent-2: #be123c; --accent-shadow: rgba(190,18,60,0.22);
+            --shadow: 0 18px 48px rgba(148,58,88,0.18);
+        }
+
+        * { box-sizing: border-box; }
+        html { margin: 0; min-height: 100%; font-size: calc(28px * var(--fit-scale)); }
+        body {
+            margin: 0; min-height: 100vh; font-family: var(--font-main); background: var(--bg); color: var(--text);
+            overflow: hidden; position: relative;
+        }
+        body::before {
+            content: ""; position: fixed; inset: 0; background: var(--glow); pointer-events: none;
+        }
+        button, input { font: inherit; }
+
+        .rotate-hint { display: none; position: fixed; inset: 0; z-index: 4; align-items: center; justify-content: center; padding: 24px; }
+        .rotate-card {
+            width: min(100%, 520px); background: var(--panel-strong); border: 1px solid var(--line);
+            border-radius: calc(28px * var(--fit-scale)); box-shadow: var(--shadow); padding: calc(24px * var(--fit-scale));
+            text-align: center; line-height: 1.5;
+        }
+        .rotate-card strong { display: block; font-size: 2.4rem; margin-bottom: 10px; }
+
+        .board {
+            position: relative; z-index: 1; height: 100vh; padding: calc(6px * var(--fit-scale));
+            display: grid; grid-template-rows: auto 1fr auto; gap: calc(6px * var(--fit-scale));
+        }
+        .topbar { display: flex; justify-content: flex-end; gap: calc(4px * var(--fit-scale)); }
+        .btn {
+            border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 999px;
+            padding: calc(10px * var(--fit-scale)) calc(18px * var(--fit-scale)); backdrop-filter: blur(10px);
+            font-size: 1.5rem;
+            box-shadow: var(--shadow); cursor: pointer;
+        }
+        .topbar .btn {
+            font-size: clamp(11px, 0.8vw, 15px);
+            padding: clamp(6px, 0.45vw, 8px) clamp(10px, 0.7vw, 14px);
+        }
+        .layout {
+            min-height: 0; display: grid; grid-template-columns: minmax(0, 1.86fr) minmax(0, 0.9fr) minmax(0, 0.28fr);
+            gap: calc(6px * var(--fit-scale));
+            position: relative;
+        }
+        .column { min-height: 0; display: grid; gap: calc(6px * var(--fit-scale)); }
+        .left-column { grid-template-rows: minmax(0, 1.38fr) minmax(0, 0.62fr); }
+        #meal-column { grid-template-rows: minmax(0, 1fr); }
+
+        .panel {
+            min-width: 0; min-height: 0; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow);
+            backdrop-filter: blur(12px); border-radius: calc(30px * var(--fit-scale)); padding: calc(8px * var(--fit-scale));
+        }
+        .bottom-blank {
+            min-width: 0;
+            min-height: calc(204px * var(--fit-scale) * var(--schedule-scale));
+            background: var(--panel-strong);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            border-radius: calc(20px * var(--fit-scale));
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: calc(5px * var(--fit-scale) * var(--hero-scale));
+            overflow: hidden;
+            position: relative;
+            padding-top: calc(3px * var(--fit-scale) * var(--hero-scale));
+            padding-bottom: calc(3px * var(--fit-scale) * var(--hero-scale));
+        }
+        .hero::after {
+            content: ""; position: absolute; right: calc(-30px * var(--fit-scale)); top: calc(-34px * var(--fit-scale));
+            width: calc(180px * var(--fit-scale)); height: calc(180px * var(--fit-scale)); border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.32), transparent 72%); pointer-events: none;
+        }
+        .hero-badges { display: flex; flex-wrap: wrap; align-items: center; gap: calc(4px * var(--fit-scale) * var(--hero-scale)); }
+        .time-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: calc(4px * var(--fit-scale) * var(--hero-scale));
+            flex-wrap: nowrap;
+        }
+        .time-row.single-clock {
+            justify-content: center;
+        }
+        .time-block {
+            min-width: 0;
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+        }
+        .time-block.is-hidden,
+        .time-side.is-hidden {
+            display: none;
+        }
+        .time-row.single-clock .time-block,
+        .time-row.single-clock .time-side {
+            flex: 0 0 auto;
+            min-width: 0;
+            justify-content: center;
+        }
+        .time-side {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            gap: calc(4px * var(--fit-scale) * var(--hero-scale));
+            flex: 0 0 auto;
+        }
+        .eyebrow {
+            display: inline-flex; align-items: center; background: var(--panel-strong); border: 1px solid var(--line);
+            border-radius: 999px; padding: calc(6px * var(--fit-scale) * var(--hero-scale)) calc(12px * var(--fit-scale) * var(--hero-scale)); color: var(--sub); font-size: calc(4.4rem * var(--hero-scale));
+        }
+        .eyebrow.soft { background: transparent; }
+        .analog-clock {
+            --analog-size: calc(1600px * var(--fit-scale) * var(--hero-scale));
+            width: var(--analog-size);
+            height: var(--analog-size);
+            padding: 0;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+        }
+        .analog-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 32% 28%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.9) 55%, rgba(255,255,255,0.76) 100%);
+            border: calc(var(--analog-size) * 0.03) solid var(--accent-2);
+            box-shadow:
+                inset 0 0 0 calc(var(--analog-size) * 0.016) rgba(255,255,255,0.58),
+                inset 0 calc(var(--analog-size) * -0.055) calc(var(--analog-size) * 0.11) rgba(16,39,66,0.08);
+        }
+        .analog-face::before {
+            content: "";
+            position: absolute;
+            inset: calc(var(--analog-size) * 0.11);
+            border-radius: 50%;
+            border: 1px solid rgba(16,39,66,0.08);
+        }
+        .analog-tick {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: calc(var(--analog-size) * 0.016);
+            height: calc(var(--analog-size) * 0.0325);
+            background: var(--accent-2);
+            border-radius: 999px;
+            opacity: 0.76;
+            z-index: 1;
+            transform: translate(-50%, -50%) rotate(calc(var(--tick) * 30deg)) translateY(calc(var(--analog-size) * -0.43125));
+        }
+        .analog-tick.major {
+            width: calc(var(--analog-size) * 0.024);
+            height: calc(var(--analog-size) * 0.045);
+            background: var(--accent);
+            opacity: 0.95;
+            transform: translate(-50%, -50%) rotate(calc(var(--tick) * 30deg)) translateY(calc(var(--analog-size) * -0.4375));
+        }
+        .analog-number {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            color: var(--accent-2);
+            font-size: calc(var(--analog-size) * 0.082);
+            line-height: 1;
+            white-space: nowrap;
+            z-index: 2;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.7);
+            transform:
+                translate(-50%, -50%)
+                rotate(calc(var(--num) * 30deg))
+                translateY(calc(var(--analog-size) * -0.345))
+                rotate(calc(var(--num) * -30deg));
+        }
+        .analog-hand {
+            position: absolute;
+            left: 50%;
+            bottom: 50%;
+            transform: translateX(-50%) rotate(0deg);
+            transform-origin: center bottom;
+            border-radius: 999px;
+            overflow: visible;
+            z-index: 3;
+        }
+        .analog-hour {
+            width: calc(var(--analog-size) * 0.05);
+            height: calc(var(--analog-size) * 0.245);
+            background: var(--accent-2);
+        }
+        .analog-minute {
+            width: calc(var(--analog-size) * 0.03);
+            height: calc(var(--analog-size) * 0.34);
+            background: var(--text);
+        }
+        .analog-second {
+            width: calc(var(--analog-size) * 0.015);
+            height: calc(var(--analog-size) * 0.38);
+            background: var(--accent);
+        }
+        .analog-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: calc(var(--analog-size) * 0.09);
+            height: calc(var(--analog-size) * 0.09);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: none;
+            z-index: 4;
+        }
+        .badge-slot {
+            min-height: 0;
+            display: flex;
+        }
+        .badge-slot:empty {
+            display: none;
+        }
+        .badge-slot > .meal-ai-badge {
+            flex: 1 1 auto;
+        }
+        .time-text { margin: 0; font-size: calc(78rem * var(--hero-scale)); line-height: 0.78; letter-spacing: -0.05em; }
+        .date-text { color: var(--sub); font-size: calc(11.7rem * var(--hero-scale)); line-height: 0.98; }
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-rows: minmax(0, 1fr);
+            gap: calc(5px * var(--fit-scale) * var(--weather-scale));
+            align-content: start;
+        }
+        .chip, .schedule-item, .meal-item, .empty {
+            background: var(--panel-strong); border: 1px solid var(--line); border-radius: calc(20px * var(--fit-scale));
+        }
+        .chip { padding: calc(8px * var(--fit-scale) * var(--hero-scale)); min-height: calc(78px * var(--fit-scale) * var(--hero-scale)); }
+        .label { display: block; color: var(--sub); font-size: calc(4rem * var(--hero-scale)); margin-bottom: calc(2px * var(--fit-scale) * var(--hero-scale)); }
+        .value {
+            font-size: calc(6.8rem * var(--hero-scale));
+            line-height: 1.02;
+            word-break: normal;
+            overflow-wrap: anywhere;
+        }
+        .weather-grid .chip {
+            min-width: 0;
+            min-height: calc(62px * var(--fit-scale) * var(--weather-scale));
+            padding: calc(7px * var(--fit-scale) * var(--weather-scale));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .weather-grid .label {
+            font-size: calc(5.6rem * var(--hero-scale) * var(--weather-scale));
+            margin-bottom: calc(1px * var(--fit-scale) * var(--weather-scale));
+            line-height: 1;
+        }
+        .weather-grid .value {
+            min-width: 0;
+            font-size: calc(10.2rem * var(--hero-scale) * var(--weather-scale));
+            line-height: 1.04;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: keep-all;
+        }
+        .weather-subvalue {
+            min-width: 0;
+            color: var(--sub);
+            font-size: calc(5.2rem * var(--hero-scale) * var(--weather-scale));
+            line-height: 1.02;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: keep-all;
+        }
+        .weather-inline {
+            min-width: 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: flex-start;
+            gap: calc(8px * var(--fit-scale) * var(--weather-scale));
+            flex-wrap: nowrap;
+        }
+        .weather-inline .value {
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+        .weather-inline .weather-subvalue {
+            flex: 1 1 auto;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .status {
+            min-width: 0; min-height: calc(320px * var(--fit-scale) * var(--status-scale)); border-radius: calc(30px * var(--fit-scale)); padding: calc(16px * var(--fit-scale) * var(--status-scale));
+            color: #fff; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%); box-shadow: var(--shadow);
+            display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: calc(10px * var(--fit-scale) * var(--status-scale));
+        }
+        .status.guidance-hidden {
+            grid-template-rows: minmax(0, 1fr);
+        }
+        .status-block {
+            min-height: 0;
+            padding: calc(12px * var(--fit-scale) * var(--status-scale)) calc(14px * var(--fit-scale) * var(--status-scale));
+            border-radius: calc(22px * var(--fit-scale));
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.22);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: calc(6px * var(--fit-scale) * var(--status-scale));
+        }
+        .status small { display: block; opacity: 0.92; font-size: calc(7.8rem * var(--status-scale)); }
+        .status strong { font-size: calc(12.2rem * var(--status-scale)); line-height: 1.08; font-weight: 400; white-space: normal; word-break: keep-all; }
+        .status-guidance {
+            gap: calc(6px * var(--fit-scale) * var(--status-scale));
+        }
+        .status-guidance-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: calc(8px * var(--fit-scale) * var(--status-scale));
+        }
+        .status-guidance-label {
+            font-size: calc(7.8rem * var(--status-scale));
+            opacity: 0.92;
+            line-height: 1.1;
+        }
+        .status-guidance-btn {
+            flex: 0 0 auto;
+            padding: calc(4px * var(--fit-scale) * var(--status-scale)) calc(10px * var(--fit-scale) * var(--status-scale));
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.24);
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            font-size: calc(5.4rem * var(--status-scale));
+            line-height: 1;
+            box-shadow: none;
+        }
+        .status-guidance-text {
+            font-size: calc(12.2rem * var(--status-scale));
+            line-height: 1.08;
+            white-space: normal;
+            word-break: keep-all;
+        }
+
+        .section { display: flex; flex-direction: column; }
+        .section-head {
+            display: flex; justify-content: space-between; align-items: end; gap: calc(12px * var(--fit-scale));
+            margin-bottom: calc(6px * var(--fit-scale));
+        }
+        .section-head h2 { margin: 0; font-size: 3.3rem; }
+        .section-note { color: var(--sub); font-size: 1.7rem; text-align: right; }
+        .schedule-panel .section-head h2 { font-size: calc(4.62rem * var(--schedule-scale)); }
+        .schedule-panel .section-note { font-size: calc(2.38rem * var(--schedule-scale)); }
+        .schedule-list, .meal-list { min-height: 0; flex: 1 1 auto; display: grid; gap: calc(6px * var(--fit-scale)); }
+        .schedule-list { gap: calc(2px * var(--fit-scale)); }
+        .schedule-item {
+            display: grid; grid-template-columns: minmax(0, 0.88fr) minmax(0, 1fr); align-items: stretch;
+            gap: calc(12px * var(--fit-scale) * var(--schedule-scale)); padding: calc(4px * var(--fit-scale) * var(--schedule-scale)) calc(8px * var(--fit-scale) * var(--schedule-scale));
+            transition: background 0.06s linear, box-shadow 0.06s linear, transform 0.06s linear; overflow: hidden;
+        }
+        .schedule-item.current {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%); border-color: transparent; color: #fff;
+            box-shadow: 0 calc(16px * var(--fit-scale)) calc(32px * var(--fit-scale)) var(--accent-shadow);
+            transform: translateY(calc(-2px * var(--fit-scale)));
+        }
+        .schedule-item.current .schedule-time, .schedule-item.current .schedule-label, .schedule-item.current .schedule-sub { color: #fff; }
+        .schedule-item.past { opacity: 0.62; }
+        .schedule-time {
+            color: var(--accent-2);
+            font-size: calc(7.28rem * var(--schedule-scale));
+            line-height: 0.96;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            justify-self: stretch;
+            text-align: center;
+        }
+        .schedule-line {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: calc(2px * var(--fit-scale) * var(--schedule-scale));
+            padding-left: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        .schedule-label-row {
+            min-width: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: calc(8px * var(--fit-scale) * var(--schedule-scale));
+            flex-wrap: wrap;
+        }
+        .schedule-label {
+            font-size: calc(5.6rem * var(--schedule-scale));
+            line-height: 0.98;
+            white-space: nowrap;
+            max-width: none;
+            flex: 0 0 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+        .schedule-sub {
+            min-width: 0; flex: 0 0 auto; color: var(--sub); font-size: calc(2.52rem * var(--schedule-scale)); overflow: hidden;
+            text-overflow: ellipsis; white-space: nowrap;
+            text-align: center;
+        }
+        .schedule-extra {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            padding: calc(3px * var(--fit-scale) * var(--schedule-scale)) calc(8px * var(--fit-scale) * var(--schedule-scale));
+            border-radius: 999px;
+            background: rgba(255,255,255,0.72);
+            border: 1px solid var(--line);
+            color: var(--accent-2);
+            font-size: calc(2.7rem * var(--schedule-scale));
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .schedule-item.current .schedule-extra {
+            color: #fff;
+            background: rgba(255,255,255,0.16);
+            border-color: rgba(255,255,255,0.3);
+        }
+        .meal-item { padding: calc(10px * var(--fit-scale) * var(--meal-scale)); display: flex; flex-direction: column; justify-content: flex-start; }
+        .meal-panel .section-head h2 { font-size: calc(3.3rem * var(--meal-scale)); }
+        .meal-panel .section-note { font-size: calc(1.7rem * var(--meal-scale)); }
+        .meal-date { color: var(--accent-2); font-size: calc(4.8rem * var(--meal-scale)); margin-bottom: calc(5px * var(--fit-scale) * var(--meal-scale)); }
+        .meal-menu {
+            white-space: pre-wrap;
+            word-break: normal;
+            overflow-wrap: anywhere;
+            max-width: 100%;
+            font-size: calc(6.4rem * var(--meal-scale));
+            line-height: 1.08;
+        }
+        .layout-resizers {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .resize-handle {
+            position: absolute;
+            border: none;
+            background: transparent;
+            padding: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.18s ease, transform 0.18s ease;
+        }
+        .resize-handle::before {
+            content: "";
+            position: absolute;
+            inset: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 999px;
+            background: rgba(255,255,255,0.94);
+            border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--line));
+            box-shadow: 0 8px 20px rgba(15,98,254,0.18);
+        }
+        .resize-handle.vertical { width: calc(24px * var(--fit-scale)); }
+        .resize-handle.vertical::before { width: calc(8px * var(--fit-scale)); height: calc(120px * var(--fit-scale)); }
+        .resize-handle.horizontal { height: calc(24px * var(--fit-scale)); }
+        .resize-handle.horizontal::before { width: calc(120px * var(--fit-scale)); height: calc(8px * var(--fit-scale)); }
+        .board.resize-mode .layout-resizers { pointer-events: none; }
+        .board.resize-mode .resize-handle {
+            opacity: 1;
+            pointer-events: auto;
+            cursor: ew-resize;
+        }
+        .board.resize-mode .resize-handle.horizontal { cursor: ns-resize; }
+        .board.resize-mode .panel,
+        .board.resize-mode .status {
+            outline: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+            outline-offset: -2px;
+        }
+        body.is-resizing * {
+            user-select: none;
+        }
+        body.is-dragging-sheet * {
+            user-select: none;
+        }
+        .empty {
+            padding: calc(10px * var(--fit-scale)); color: var(--sub); text-align: center; line-height: 1.32; border-style: dashed; font-size: 1.7rem;
+        }
+
+        .overlay {
+            position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center;
+            padding: 8px; background: transparent; backdrop-filter: none;
+        }
+        .sheet {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: min(100%, 920px); max-height: 98vh; overflow: auto; background: var(--panel-strong); border: 1px solid var(--line); box-shadow: var(--shadow);
+            border-radius: 22px; padding: 12px;
+        }
+        .overlay .btn {
+            font-size: clamp(13px, 0.84vw, 17px);
+            padding: 7px 13px;
+            border-radius: 12px;
+        }
+        .sheet.dragging { box-shadow: 0 22px 56px rgba(0, 0, 0, 0.22); }
+        .sheet-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 10px; cursor: grab; touch-action: none; }
+        .sheet.dragging .sheet-head { cursor: grabbing; }
+        .sheet-head button { cursor: pointer; }
+        .sheet-head h2 { margin: 0; font-size: clamp(13px, 0.84vw, 17px); }
+        .sheet-head p { margin: 4px 0 0; color: var(--sub); font-size: clamp(11px, 0.7vw, 14px); line-height: 1.35; }
+        .stack { display: grid; gap: 7px; margin-top: 7px; }
+        .stack > strong { font-size: clamp(13px, 0.84vw, 17px); }
+        .field-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+        .field-grid.morning-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .field-span-full { grid-column: 1 / -1; }
+        .field-group { display: flex; flex-direction: column; gap: 4px; }
+        .field-group span { color: var(--sub); font-size: clamp(10px, 0.66vw, 13px); line-height: 1.25; }
+        .field-note { color: var(--sub); font-size: clamp(10px, 0.66vw, 13px); line-height: 1.25; }
+        .field-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+        .toggle-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+        .toggle-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: var(--panel);
+            cursor: pointer;
+            line-height: 1.2;
+        }
+        .toggle-chip input {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+        .status-guidance.is-hidden,
+        #meal-column.is-hidden,
+        .resize-handle.is-hidden {
+            display: none;
+        }
+        .setting-input {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: var(--panel);
+            color: var(--text);
+            padding: 8px 10px;
+            font-size: clamp(11px, 0.7vw, 14px);
+            line-height: 1.25;
+            pointer-events: auto;
+            touch-action: manipulation;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+        textarea.setting-input {
+            min-height: 68px;
+            resize: vertical;
+        }
+        .setting-input:focus {
+            outline: 2px solid color-mix(in srgb, var(--accent) 50%, transparent);
+            outline-offset: 1px;
+        }
+        .schedule-sheet { width: min(100%, 1200px); }
+        .schedule-edit-list { display: grid; gap: 7px; }
+        .schedule-edit-row {
+            display: grid;
+            grid-template-columns: minmax(150px, 0.7fr) minmax(0, 1.5fr) minmax(160px, 0.8fr);
+            gap: 7px;
+            align-items: end;
+            padding: 8px;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            background: var(--panel);
+        }
+        .theme-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+        .file-label {
+            display: block; border: 1px dashed var(--line); border-radius: 24px;
+            padding: 10px; background: var(--panel); line-height: 1.35; cursor: pointer; font-size: clamp(11px, 0.7vw, 14px);
+        }
+        .file-label input { display: none; }
+        .hint { margin-top: 6px; color: var(--sub); font-size: clamp(10px, 0.66vw, 13px); line-height: 1.35; }
+        .guide-sheet { width: min(100%, 760px); }
+        .guide-list {
+            margin: 0;
+            padding: 0 0 0 18px;
+            display: grid;
+            gap: 6px;
+            color: var(--text);
+            font-size: clamp(11px, 0.72vw, 14px);
+            line-height: 1.45;
+        }
+        .guide-list a {
+            color: var(--accent);
+            font-weight: 800;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .guide-list a:hover { text-decoration: underline; }
+        .guide-callout {
+            color: var(--sub);
+            font-size: clamp(10px, 0.66vw, 13px);
+            line-height: 1.35;
+        }
+
+        @media (orientation: portrait) {
+            .board { display: none; }
+            .rotate-hint { display: flex; }
+        }
+        @media (max-width: 1280px) and (orientation: landscape) {
+            .layout { grid-template-columns: minmax(0, 1.7fr) minmax(0, 0.82fr) minmax(0, 0.32fr); }
+            .left-column { grid-template-rows: minmax(0, 1.34fr) minmax(0, 0.66fr); }
+            #meal-column { grid-template-rows: minmax(0, 1fr); }
+            .status strong { font-size: calc(13.6rem * var(--status-scale)); }
+            .status small { font-size: calc(5.8rem * var(--status-scale)); }
+            .field-grid { grid-template-columns: 1fr; }
+            .field-grid.morning-grid { grid-template-columns: 1fr; }
+            .toggle-grid { grid-template-columns: 1fr; }
+            .theme-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .schedule-edit-row { grid-template-columns: 1fr; }
+            .time-row { gap: calc(6px * var(--fit-scale)); }
+            .time-side { gap: calc(6px * var(--fit-scale)); }
+            .analog-clock { --analog-size: calc(1370px * var(--fit-scale) * var(--hero-scale)); }
+            .schedule-label { font-size: calc(4.8rem * var(--schedule-scale)); }
+            .schedule-time { font-size: calc(5.8rem * var(--schedule-scale)); }
+            .schedule-sub { font-size: calc(2rem * var(--schedule-scale)); }
+            .meal-menu { font-size: calc(5.6rem * var(--meal-scale)); }
+        }
+    </style>
+</head>
+<body class="theme-sky">
+    <div class="rotate-hint">
+        <div class="rotate-card">
+            <strong>가로 모드 전용</strong>
+            <div>전자칠판용 화면입니다. 기기를 가로로 돌리면 대시보드가 크게 표시됩니다.</div>
+        </div>
+    </div>
+
+    <div class="board">
+        <div class="topbar">
+            <button id="toggle-resize-mode" class="btn" type="button">크기 조절</button>
+            <button id="toggle-fullscreen" class="btn" type="button">전체화면</button>
+            <button id="open-settings" class="btn" type="button">설정</button>
+        </div>
+        <div id="board-layout" class="layout">
+            <div id="left-column" class="column left-column">
+                <section id="hero-panel" class="panel hero">
+                    <div class="hero-badges">
+                        <div id="school-badge" class="eyebrow">학교 정보를 불러오는 중입니다.</div>
+                        <div id="class-badge" class="eyebrow soft">학년 반</div>
+                    </div>
+                    <div id="time-row" class="time-row">
+                        <div id="digital-clock-wrap" class="time-block">
+                            <h1 id="time-text" class="time-text">00:00</h1>
+                        </div>
+                        <div id="analog-clock-wrap" class="time-side">
+                            <div class="analog-clock" aria-label="아날로그 시계">
+                                <div class="analog-face">
+                                    <span class="analog-tick major" style="--tick:0"></span>
+                                    <span class="analog-tick" style="--tick:1"></span>
+                                    <span class="analog-tick" style="--tick:2"></span>
+                                    <span class="analog-tick major" style="--tick:3"></span>
+                                    <span class="analog-tick" style="--tick:4"></span>
+                                    <span class="analog-tick" style="--tick:5"></span>
+                                    <span class="analog-tick major" style="--tick:6"></span>
+                                    <span class="analog-tick" style="--tick:7"></span>
+                                    <span class="analog-tick" style="--tick:8"></span>
+                                    <span class="analog-tick major" style="--tick:9"></span>
+                                    <span class="analog-tick" style="--tick:10"></span>
+                                    <span class="analog-tick" style="--tick:11"></span>
+                                    <span class="analog-number" style="--num:1">1</span>
+                                    <span class="analog-number" style="--num:2">2</span>
+                                    <span class="analog-number" style="--num:3">3</span>
+                                    <span class="analog-number" style="--num:4">4</span>
+                                    <span class="analog-number" style="--num:5">5</span>
+                                    <span class="analog-number" style="--num:6">6</span>
+                                    <span class="analog-number" style="--num:7">7</span>
+                                    <span class="analog-number" style="--num:8">8</span>
+                                    <span class="analog-number" style="--num:9">9</span>
+                                    <span class="analog-number" style="--num:10">10</span>
+                                    <span class="analog-number" style="--num:11">11</span>
+                                    <span class="analog-number" style="--num:12">12</span>
+                                    <span id="analog-hour" class="analog-hand analog-hour"></span>
+                                    <span id="analog-minute" class="analog-hand analog-minute"></span>
+                                    <span id="analog-second" class="analog-hand analog-second"></span>
+                                    <span class="analog-center"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="date-text" class="date-text">날짜를 불러오는 중입니다.</div>
+                    <div class="weather-grid">
+                        <div class="chip"><span class="label">현재 날씨</span><div id="weather-current" class="value">불러오는 중</div></div>
+                        <div class="chip"><span class="label">최고 / 최저</span><div id="weather-range" class="value">-</div></div>
+                        <div class="chip"><span class="label">강수 확률</span><div id="weather-rain" class="value">-</div></div>
+                        <div class="chip weather-air-chip">
+                            <span class="label">미세먼지 현황</span>
+                            <div class="weather-inline">
+                                <div id="weather-air" class="value">-</div>
+                                <div id="weather-air-detail" class="weather-subvalue">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="status-panel" class="status">
+                    <div class="status-block">
+                        <small>현재 안내 사항</small>
+                        <strong id="status-text">데이터를 불러오는 중입니다.</strong>
+                    </div>
+                    <div class="status-block status-guidance">
+                        <div class="status-guidance-head">
+                            <div id="daily-guidance-label" class="status-guidance-label">오늘의 한마디</div>
+                            <button id="daily-guidance-next" class="btn status-guidance-btn" type="button">NEW</button>
+                        </div>
+                        <div id="daily-guidance-text" class="status-guidance-text">오늘 문구를 준비하는 중입니다.</div>
+                    </div>
+                </section>
+            </div>
+            <div id="schedule-column" class="column">
+                <section id="schedule-panel" class="panel section schedule-panel">
+                    <div class="section-head">
+                        <h2>오늘 시정표</h2>
+                        <div id="schedule-note" class="section-note">현재 시간 반영</div>
+                    </div>
+                    <div id="schedule-list" class="schedule-list">
+                        <div class="empty">시정표를 준비하는 중입니다.</div>
+                    </div>
+                </section>
+            </div>
+            <div id="meal-column" class="column">
+                <section id="meal-panel" class="panel section meal-panel">
+                    <div class="section-head">
+                        <h2>오늘 / 내일 급식</h2>
+                        <div id="meal-note" class="section-note">학교 정보 필요</div>
+                    </div>
+                    <div id="meal-list" class="meal-list">
+                        <div class="empty">급식 정보를 준비하는 중입니다.</div>
+                    </div>
+                </section>
+            </div>
+            <div class="layout-resizers" aria-hidden="true">
+                <button id="resize-left-middle" class="resize-handle vertical" type="button" tabindex="-1"></button>
+                <button id="resize-middle-right" class="resize-handle vertical" type="button" tabindex="-1"></button>
+                <button id="resize-left-rows" class="resize-handle horizontal" type="button" tabindex="-1"></button>
+            </div>
+        </div>
+        <div class="bottom-blank" aria-hidden="true"></div>
+    </div>
+
+    <div id="settings-overlay" class="overlay">
+        <div class="sheet">
+            <div class="sheet-head">
+                <div>
+                    <h2>전자칠판 설정</h2>
+                </div>
+                <button id="close-settings" class="btn" type="button">닫기</button>
+            </div>
+            <div class="stack">
+                <strong>표시 정보</strong>
+                <div class="field-grid">
+                    <label class="field-group field-span-full">
+                        <span>학교</span>
+                        <input id="settings-school-name" class="setting-input" type="text" placeholder="학교명을 입력하세요">
+                    </label>
+                    <label class="field-group">
+                        <span>학년</span>
+                        <input id="settings-grade" class="setting-input" type="text" inputmode="numeric" placeholder="예: 4">
+                    </label>
+                    <label class="field-group">
+                        <span>반</span>
+                        <input id="settings-class" class="setting-input" type="text" inputmode="numeric" placeholder="예: 3">
+                    </label>
+                    <div class="field-group field-span-full">
+                        <span>나이스 API 키</span>
+                        <input id="settings-neis-api" class="setting-input" type="text" placeholder="나이스 API 키를 입력하세요" autocomplete="off" autocapitalize="off" spellcheck="false">
+                        <span class="field-note">(급식정보를 가져오기 위해 필요함)</span>
+                        <div class="field-actions">
+                            <button id="open-neis-guide" class="btn" type="button">인증키 받는 방법</button>
+                        </div>
+                    </div>
+                    <label class="field-group">
+                        <span>학교 위도</span>
+                        <input id="settings-latitude" class="setting-input" type="text" inputmode="decimal" placeholder="예: 37.5969">
+                    </label>
+                    <label class="field-group">
+                        <span>학교 경도</span>
+                        <input id="settings-longitude" class="setting-input" type="text" inputmode="decimal" placeholder="예: 126.6279">
+                    </label>
+                    <div class="field-group field-span-full">
+                        <span>위도·경도 안내</span>
+                        <div class="field-actions">
+                            <button id="open-location-guide" class="btn" type="button">위도경도 넣는 방법</button>
+                        </div>
+                        <span class="field-note">위도·경도는 날씨 정보를 가져오기 위해 필요합니다.</span>
+                    </div>
+                    <label class="field-group field-span-full">
+                        <span>오늘의 명언</span>
+                        <textarea id="settings-daily-guidance" class="setting-input" placeholder="오늘 보여줄 명언을 직접 입력하세요"></textarea>
+                        <span class="field-note">비워두면 자동으로 준비된 오늘의 문구가 표시됩니다.</span>
+                    </label>
+                    <label class="field-group field-span-full">
+                        <span>글씨 서체</span>
+                        <select id="settings-font" class="setting-input">
+                            <option value="">서체 목록을 불러오는 중입니다.</option>
+                        </select>
+                    </label>
+                    <label class="field-group field-span-full">
+                        <span>시계 표시</span>
+                        <div class="toggle-grid">
+                            <label class="toggle-chip">
+                                <input id="settings-show-digital" type="checkbox">
+                                <span>전자시계</span>
+                            </label>
+                            <label class="toggle-chip">
+                                <input id="settings-show-analog" type="checkbox">
+                                <span>아날로그시계</span>
+                            </label>
+                        </div>
+                    </label>
+                    <label class="field-group field-span-full">
+                        <span>표시 여부</span>
+                        <div class="toggle-grid">
+                            <label class="toggle-chip">
+                                <input id="settings-show-morning-activity" type="checkbox">
+                                <span>요일별 아침활동</span>
+                            </label>
+                            <label class="toggle-chip">
+                                <input id="settings-show-meal" type="checkbox">
+                                <span>급식</span>
+                            </label>
+                            <label class="toggle-chip">
+                                <input id="settings-show-guidance" type="checkbox">
+                                <span>명언</span>
+                            </label>
+                        </div>
+                    </label>
+                </div>
+            </div>
+            <div class="stack">
+                <strong>요일별 아침활동</strong>
+                <div class="field-grid morning-grid">
+                    <label class="field-group">
+                        <span>월요일</span>
+                        <input id="morning-1" class="setting-input" type="text" placeholder="월요일 활동">
+                    </label>
+                    <label class="field-group">
+                        <span>화요일</span>
+                        <input id="morning-2" class="setting-input" type="text" placeholder="화요일 활동">
+                    </label>
+                    <label class="field-group">
+                        <span>수요일</span>
+                        <input id="morning-3" class="setting-input" type="text" placeholder="수요일 활동">
+                    </label>
+                    <label class="field-group">
+                        <span>목요일</span>
+                        <input id="morning-4" class="setting-input" type="text" placeholder="목요일 활동">
+                    </label>
+                    <label class="field-group field-span-full">
+                        <span>금요일</span>
+                        <input id="morning-5" class="setting-input" type="text" placeholder="금요일 활동">
+                    </label>
+                </div>
+                <button id="save-display-settings" class="btn" type="button">학교/API 키/명언/표시/아침활동/서체/시계 저장</button>
+            </div>
+            <div class="stack">
+                <strong>시정표 편집</strong>
+                <button id="open-schedule-editor" class="btn" type="button">시정표 시간/활동 편집</button>
+            </div>
+            <div class="stack">
+                <strong>테마</strong>
+                <div class="theme-grid">
+                    <button class="btn" type="button" data-theme="theme-sky">하늘</button>
+                    <button class="btn" type="button" data-theme="theme-sand">샌드</button>
+                    <button class="btn" type="button" data-theme="theme-forest">숲</button>
+                    <button class="btn" type="button" data-theme="theme-sunset">노을</button>
+                    <button class="btn" type="button" data-theme="theme-ocean">바다</button>
+                    <button class="btn" type="button" data-theme="theme-lemon">레몬</button>
+                    <button class="btn" type="button" data-theme="theme-ink">잉크</button>
+                    <button class="btn" type="button" data-theme="theme-blossom">벚꽃</button>
+                    <button class="btn" type="button" data-theme="theme-mint">민트</button>
+                    <button class="btn" type="button" data-theme="theme-peach">피치</button>
+                    <button class="btn" type="button" data-theme="theme-cocoa">코코아</button>
+                    <button class="btn" type="button" data-theme="theme-lime">라임</button>
+                    <button class="btn" type="button" data-theme="theme-lagoon">라군</button>
+                    <button class="btn" type="button" data-theme="theme-coral">코랄</button>
+                    <button class="btn" type="button" data-theme="theme-lilac">라일락</button>
+                    <button class="btn" type="button" data-theme="theme-slate">슬레이트</button>
+                    <button class="btn" type="button" data-theme="theme-cream">크림</button>
+                    <button class="btn" type="button" data-theme="theme-ruby">루비</button>
+                    <button class="btn" type="button" data-theme="auto">자동테마</button>
+                </div>
+                <div class="hint">자동테마는 하루에 한번 씩 자동으로 선택됩니다.</div>
+            </div>
+            <div class="stack">
+                <button id="close-settings-bottom" class="btn" type="button">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="neis-guide-overlay" class="overlay">
+        <div class="sheet guide-sheet">
+            <div class="sheet-head">
+                <div>
+                    <h2>나이스 교육정보 개방 포털 API 만들기</h2>
+                    <p>급식 정보를 불러오기 위한 인증키 발급 순서입니다.</p>
+                </div>
+                <button id="close-neis-guide" class="btn" type="button">닫기</button>
+            </div>
+            <div class="stack">
+                <ol class="guide-list">
+                    <li><a href="https://open.neis.go.kr" target="_blank" rel="noreferrer noopener">https://open.neis.go.kr</a> 접속</li>
+                    <li>로그인</li>
+                    <li>개인정보동의</li>
+                    <li>마이페이지</li>
+                    <li>인증키발급</li>
+                    <li>개인정보 입력 및 인증키 발급 신청</li>
+                    <li>인증키 복사</li>
+                </ol>
+                <div class="guide-callout">복사한 인증키를 설정창의 `나이스 API 키` 칸에 붙여 넣으면 급식 정보 조회에 바로 사용할 수 있습니다.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="location-guide-overlay" class="overlay">
+        <div class="sheet guide-sheet">
+            <div class="sheet-head">
+                <div>
+                    <h2>학교 위도·경도 넣는 방법</h2>
+                    <p>날씨와 미세먼지 정보를 정확히 가져오기 위한 좌표 입력 방법입니다.</p>
+                </div>
+                <button id="close-location-guide" class="btn" type="button">닫기</button>
+            </div>
+            <div class="stack">
+                <ol class="guide-list">
+                    <li>구글 AI 모드</li>
+                    <li>`000학교 위도, 경도` 검색</li>
+                    <li>숫자 복사해서 설정 화면에 붙여넣기</li>
+                </ol>
+                <div class="guide-callout">학교명을 넣어 위도·경도를 검색한 뒤, 위도는 `학교 위도`, 경도는 `학교 경도` 칸에 각각 넣으면 됩니다.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="schedule-editor-overlay" class="overlay">
+        <div class="sheet schedule-sheet">
+            <div class="sheet-head">
+                <div>
+                    <h2>시정표 편집</h2>
+                    <p>시간, 활동명, 구분을 바꾸면 시정표와 진행 상태 문구에 바로 반영됩니다.</p>
+                </div>
+                <button id="close-schedule-editor" class="btn" type="button">닫기</button>
+            </div>
+            <div id="schedule-editor-list" class="schedule-edit-list"></div>
+            <div class="stack">
+                <button id="save-schedule-editor" class="btn" type="button">시정표 저장</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const EMPTY_DATA = {
+            schoolInfo: {
+                "학교명": "",
+                "학년": "",
+                "반": "",
+                "학년 반": "",
+                "나이스 API": "",
+                "학교 위도": "",
+                "학교 경도": ""
+            },
+            timeSchedule: [],
+            morningActivities: {},
+            displayOptions: {
+                morningActivity: true,
+                meal: true,
+                guidance: true
+            },
+            monthlyPlans: []
+        };
+
+        // 한 개의 저장 키만 사용합니다.
+        // 예전 모바일/데모 저장 키를 자동으로 읽지 않아 오래된 예시 자료가 되살아나는 일을 막습니다.
+        const STORAGE_KEY = "electronic-board-settings-stable-v1";
+        const THEME_KEY = "kingmath-board-theme";
+        const LAYOUT_KEY = "kingmath-board-layout";
+        const FONT_KEY = "kingmath-board-font";
+        const CLOCK_KEY = "kingmath-board-clock";
+        const DAILY_GUIDANCE_PICK_KEY = "kingmath-board-daily-guidance-pick";
+        const DEFAULT_FONT_CHOICE = "builtin:jua";
+        const DEFAULT_DISPLAY_OPTIONS = {
+            morningActivity: true,
+            meal: true,
+            guidance: true
+        };
+        const THEME_ROTATION = [
+            "theme-sky",
+            "theme-sand",
+            "theme-forest",
+            "theme-sunset",
+            "theme-ocean",
+            "theme-lemon",
+            "theme-ink",
+            "theme-blossom",
+            "theme-mint",
+            "theme-peach",
+            "theme-cocoa",
+            "theme-lime",
+            "theme-lagoon",
+            "theme-coral",
+            "theme-lilac",
+            "theme-slate",
+            "theme-cream",
+            "theme-ruby"
+        ];
+        const FONT_OPTIONS = {
+            "builtin:jua": { label: "주아", family: "'Jua', 'Nanum Gothic', sans-serif" },
+            "builtin:do-hyeon": { label: "도현", family: "'Do Hyeon', 'Nanum Gothic', sans-serif" },
+            "builtin:nanum-gothic": { label: "나눔고딕", family: "'Nanum Gothic', sans-serif" },
+            "builtin:black-han-sans": { label: "블랙한산스", family: "'Black Han Sans', 'Nanum Gothic', sans-serif" },
+            "builtin:gowun-dodum": { label: "고운돋움", family: "'Gowun Dodum', 'Nanum Gothic', sans-serif" },
+            "builtin:poor-story": { label: "푸어스토리", family: "'Poor Story', 'Nanum Gothic', sans-serif" },
+            "builtin:gaegu": { label: "개구", family: "'Gaegu', 'Nanum Gothic', sans-serif" },
+            "builtin:dongle": { label: "동글", family: "'Dongle', 'Nanum Gothic', sans-serif" },
+            "builtin:hi-melody": { label: "하이멜로디", family: "'Hi Melody', 'Nanum Gothic', sans-serif" },
+            "builtin:gugi": { label: "구기", family: "'Gugi', 'Nanum Gothic', sans-serif" },
+            "builtin:dokdo": { label: "독도", family: "'Dokdo', 'Nanum Gothic', sans-serif" }
+        };
+        const FONT_FALLBACK = "'Malgun Gothic', 'Nanum Gothic', sans-serif";
+        const MORNING_ACTIVITIES = {};
+        const DAILY_GUIDANCE_MESSAGES = [
+            { label: "오늘의 성장 한마디", text: "조금 느려도 괜찮아. 오늘의 한 걸음이 내일의 큰 성장을 만든다." },
+            { label: "오늘의 친구 한마디", text: "친구와 어색해졌다면 먼저 안부를 묻는 짧은 말부터 시작해 보자." },
+            { label: "오늘의 성장 한마디", text: "실수는 끝이 아니라 배우는 시작이야. 다시 해보는 용기가 더 중요해." },
+            { label: "오늘의 친구 한마디", text: "내 마음만큼 친구 마음도 소중해. 천천히 듣는 귀가 관계를 살린다." },
+            { label: "오늘의 성장 한마디", text: "잘하는 것보다 꾸준히 하는 힘이 더 오래 빛난다." },
+            { label: "오늘의 친구 한마디", text: "미안하다고 먼저 말하는 용기는 친구 사이를 다시 이어 주는 다리가 된다." },
+            { label: "오늘의 성장 한마디", text: "어제보다 하나만 더 해내도 충분히 멋진 하루야." },
+            { label: "오늘의 친구 한마디", text: "친구를 놀리는 말보다 응원하는 한마디가 더 오래 기억된다." },
+            { label: "오늘의 성장 한마디", text: "포기하지 않고 다시 시작하는 사람은 이미 절반은 이긴 거야." },
+            { label: "오늘의 친구 한마디", text: "다툰 뒤에는 누가 맞았는지보다 다시 웃을 수 있는 방법이 더 중요해." },
+            { label: "오늘의 성장 한마디", text: "작은 약속을 지키는 습관이 큰 믿음을 만든다." },
+            { label: "오늘의 친구 한마디", text: "친구의 좋은 점을 한 가지 말해 주면 마음의 거리가 조금씩 가까워진다." },
+            { label: "오늘의 성장 한마디", text: "모르는 건 부끄러운 게 아니야. 물어보는 용기가 진짜 실력이다." },
+            { label: "오늘의 친구 한마디", text: "서운한 마음은 쌓아두기보다 차분하게 말할 때 더 잘 풀린다." },
+            { label: "오늘의 성장 한마디", text: "끝까지 해 본 경험은 다음 도전을 더 쉽게 만들어 준다." },
+            { label: "오늘의 친구 한마디", text: "친구를 바꾸려 하기보다 먼저 내 말투를 부드럽게 바꾸어 보자." },
+            { label: "오늘의 성장 한마디", text: "오늘의 노력은 조용하지만 분명히 내 안에 남아 힘이 된다." },
+            { label: "오늘의 친구 한마디", text: "친구의 입장에서 한 번 생각해 보면 마음이 풀리는 길이 보인다." },
+            { label: "오늘의 성장 한마디", text: "할 수 있다는 믿음은 연습할수록 더 커진다." },
+            { label: "오늘의 친구 한마디", text: "같이 웃고 싶다면 먼저 따뜻한 표정과 친절한 말부터 건네 보자." },
+            { label: "오늘의 성장 한마디", text: "완벽하지 않아도 괜찮아. 어제보다 나아지려는 마음이 가장 소중하다." },
+            { label: "오늘의 친구 한마디", text: "친구 관계를 회복하는 첫걸음은 작은 배려와 진심 어린 사과다." },
+            { label: "오늘의 성장 한마디", text: "한 번의 실패가 나를 정하지 않아. 다시 도전하는 태도가 나를 만든다." },
+            { label: "오늘의 친구 한마디", text: "친구를 이기려 하기보다 함께 잘 지내려는 마음이 더 큰 힘이 된다." },
+            { label: "오늘의 성장 한마디", text: "힘들 때 잠깐 쉬어도 괜찮아. 쉬었다가 다시 가면 더 멀리 갈 수 있다." },
+            { label: "오늘의 친구 한마디", text: "친구의 말을 끝까지 듣는 모습은 좋은 관계를 만드는 가장 쉬운 방법이다." },
+            { label: "오늘의 성장 한마디", text: "오늘의 작은 성실함이 내일의 큰 자신감을 키워 준다." },
+            { label: "오늘의 친구 한마디", text: "서로 다르다는 이유로 멀어지지 말고, 다름을 이해하는 연습을 해 보자." },
+            { label: "오늘의 성장 한마디", text: "할 수 있는 만큼 최선을 다한 하루는 언제나 값지다." },
+            { label: "오늘의 친구 한마디", text: "먼저 손 내밀어 주는 사람이 관계를 다시 따뜻하게 만든다." },
+            { label: "오늘의 성장 한마디", text: "큰 목표도 작은 실천이 모이면 이루어진다." },
+            { label: "오늘의 친구 한마디", text: "친구의 장점을 찾아 말해 주면 서로의 마음이 더 단단해진다." }
+        ];
+        const CONFIG = {
+            LATITUDE: null,
+            LONGITUDE: null,
+            NEIS_API_KEY: "",
+            SCHOOL_NAME: "",
+            SCHOOL_NAME_ONLY: "",
+            REGION_CODE: "",
+            CLASS_NAME: ""
+        };
+
+        let globalData = null;
+        let scheduleDynamic = [];
+        let fitFrame = 0;
+        let resizeMode = false;
+        let activeResize = null;
+        let activeSheetDrag = null;
+        let localFontChoices = [];
+        let localFontsLoaded = false;
+        let localFontsLoading = false;
+        let reopenSettingsAfterScheduleEditor = false;
+        let layoutState = {
+            columns: [1.86, 0.9, 0.28],
+            leftRows: [1.56, 0.44]
+        };
+        const SCHEDULE_TYPE_OPTIONS = [
+            { value: "morning", label: "아침활동" },
+            { value: "class", label: "수업" },
+            { value: "break", label: "쉬는/이동" },
+            { value: "lunch", label: "점심" },
+            { value: "end", label: "마침" }
+        ];
+
+        function getNow() {
+            return new Date();
+        }
+
+        function getDateSeed(date = getNow()) {
+            return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
+        }
+
+        function normalizeDisplayOptions(options) {
+            return {
+                morningActivity: options?.morningActivity !== false,
+                meal: options?.meal !== false,
+                guidance: options?.guidance !== false
+            };
+        }
+
+        function getDisplayOptions(source = globalData) {
+            return normalizeDisplayOptions(source?.displayOptions || DEFAULT_DISPLAY_OPTIONS);
+        }
+
+        function getManualDailyGuidance(date = getNow(), source = globalData) {
+            const override = source?.dailyGuidanceOverride;
+            const text = String(override?.text || "").trim();
+            if (!text) return null;
+            if (Number(override?.dateSeed) !== getDateSeed(date)) return null;
+            return {
+                label: "오늘의 명언",
+                text
+            };
+        }
+
+        function getStoredDailyGuidanceIndex(date = getNow()) {
+            try {
+                const saved = JSON.parse(localStorage.getItem(DAILY_GUIDANCE_PICK_KEY) || "null");
+                const savedIndex = Number(saved?.index);
+                if (
+                    saved &&
+                    saved.dateSeed === getDateSeed(date) &&
+                    Number.isInteger(savedIndex) &&
+                    savedIndex >= 0 &&
+                    savedIndex < DAILY_GUIDANCE_MESSAGES.length
+                ) {
+                    return savedIndex;
+                }
+            } catch (_) {}
+            return null;
+        }
+
+        function setStoredDailyGuidanceIndex(index, date = getNow()) {
+            if (!Number.isInteger(index) || index < 0 || index >= DAILY_GUIDANCE_MESSAGES.length) return;
+            localStorage.setItem(
+                DAILY_GUIDANCE_PICK_KEY,
+                JSON.stringify({
+                    dateSeed: getDateSeed(date),
+                    index
+                })
+            );
+        }
+
+        function getDailyGuidanceIndex(date = getNow()) {
+            const storedIndex = getStoredDailyGuidanceIndex(date);
+            if (storedIndex !== null) return storedIndex;
+            return getDateSeed(date) % DAILY_GUIDANCE_MESSAGES.length;
+        }
+
+        function getDailyGuidance(date = getNow()) {
+            const manualGuidance = getManualDailyGuidance(date);
+            if (manualGuidance) return manualGuidance;
+            return DAILY_GUIDANCE_MESSAGES[getDailyGuidanceIndex(date)];
+        }
+
+        function pickNewDailyGuidance() {
+            if (!DAILY_GUIDANCE_MESSAGES.length) return;
+            const now = getNow();
+            const nextData = normalizeData(globalData || EMPTY_DATA);
+            const currentIndex = getDailyGuidanceIndex(now);
+            let nextIndex = currentIndex;
+
+            if (DAILY_GUIDANCE_MESSAGES.length > 1) {
+                while (nextIndex === currentIndex) {
+                    nextIndex = Math.floor(Math.random() * DAILY_GUIDANCE_MESSAGES.length);
+                }
+            }
+
+            delete nextData.dailyGuidanceOverride;
+            saveBoardData(nextData);
+            globalData = nextData;
+            setStoredDailyGuidanceIndex(nextIndex, now);
+            updateDailyGuidance(now);
+            requestViewportFit();
+        }
+
+        function updateDailyGuidance(date = getNow()) {
+            const labelEl = document.getElementById("daily-guidance-label");
+            const textEl = document.getElementById("daily-guidance-text");
+            const guidance = getDailyGuidance(date);
+            if (labelEl) labelEl.textContent = guidance.label;
+            if (textEl) textEl.textContent = guidance.text;
+        }
+
+        function normalizeTimeSchedule(rows) {
+            return (Array.isArray(rows) ? rows : []).map((item) => ({ ...item }));
+        }
+
+        function normalizeData(input) {
+            const source = input && typeof input === "object" ? input : {};
+            const schoolInfo = { ...EMPTY_DATA.schoolInfo, ...(source.schoolInfo || {}) };
+
+            return {
+                ...source,
+                schoolInfo,
+                morningActivities: { ...(source.morningActivities || {}) },
+                displayOptions: normalizeDisplayOptions(source.displayOptions),
+                timeSchedule: normalizeTimeSchedule(Array.isArray(source.timeSchedule) ? source.timeSchedule : []),
+                monthlyPlans: Array.isArray(source.monthlyPlans) ? source.monthlyPlans : []
+            };
+        }
+
+        function loadStoredData() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return EMPTY_DATA;
+
+            try {
+                return JSON.parse(raw);
+            } catch {
+                // 저장 데이터가 손상된 경우에도 예시 자료로 되돌리지 않고 빈 설정으로 시작합니다.
+                return EMPTY_DATA;
+            }
+        }
+
+        function splitSchoolName(rawName) {
+            const text = String(rawName || "");
+            const dividerIndex = text.indexOf("&");
+            return dividerIndex === -1
+                ? { name: text, suffix: "" }
+                : { name: text.slice(0, dividerIndex), suffix: text.slice(dividerIndex) };
+        }
+
+        function extractGradeClass(info = {}) {
+            const gradeValue = String(info["학년"] || "").replace(/학년/g, "").trim();
+            const classValue = String(info["반"] || "").replace(/반/g, "").trim();
+            if (gradeValue || classValue) return { grade: gradeValue, classNum: classValue };
+
+            const combined = String(info["학년 반"] || "");
+            const gradeMatch = combined.match(/(\d+)\s*학년/);
+            const classMatch = combined.match(/(\d+)\s*반/);
+            return {
+                grade: gradeMatch ? gradeMatch[1] : "",
+                classNum: classMatch ? classMatch[1] : ""
+            };
+        }
+
+        function composeClassName(grade, classNum, fallback = "") {
+            const nextGrade = String(grade || "").trim().replace(/학년/g, "");
+            const nextClass = String(classNum || "").trim().replace(/반/g, "");
+            if (!nextGrade && !nextClass) return "";
+
+            const parts = [];
+            if (nextGrade) parts.push(`${nextGrade}학년`);
+            if (nextClass) parts.push(`${nextClass}반`);
+            return parts.join(" ").trim();
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "\"": "&quot;",
+                "'": "&#39;"
+            }[char]));
+        }
+
+        function inferScheduleType(itemOrLabel) {
+            const label = typeof itemOrLabel === "string" ? itemOrLabel : itemOrLabel?.label;
+            const text = String(label || "");
+            if (text.includes("아침")) return "morning";
+            if (text.includes("점심")) return "lunch";
+            if (text.includes("교시")) return "class";
+            if (text.includes("마침")) return "end";
+            return "break";
+        }
+
+        function normalizeScheduleTimeText(value, fallback = "08:30") {
+            const match = String(value || "").trim().match(/^(\d{1,2}):(\d{2})$/);
+            if (!match) return fallback;
+            const hour = Math.min(23, Math.max(0, Number(match[1])));
+            const minute = Math.min(59, Math.max(0, Number(match[2])));
+            return `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`;
+        }
+
+        function clampNumber(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function normalizeLeftRows(rows) {
+            if (!Array.isArray(rows) || rows.length !== 2) return null;
+            const values = rows.map((value) => Number(value)).filter((value) => Number.isFinite(value) && value > 0);
+            if (values.length !== 2) return null;
+
+            const total = values[0] + values[1];
+            if (total <= 0) return null;
+
+            const minHeroShare = 0.78;
+            const heroShare = values[0] / total;
+            if (heroShare >= minHeroShare) return values;
+
+            const hero = Number((total * minHeroShare).toFixed(4));
+            const status = Number((total - hero).toFixed(4));
+            return [hero, status];
+        }
+
+        function loadLayoutState() {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(LAYOUT_KEY) || "");
+                if (!parsed || !Array.isArray(parsed.columns) || !Array.isArray(parsed.leftRows)) {
+                    return;
+                }
+
+                const columns = parsed.columns.map((value) => Number(value)).filter((value) => Number.isFinite(value) && value > 0);
+                const leftRows = normalizeLeftRows(parsed.leftRows);
+                if (columns.length === 3) layoutState.columns = columns;
+                if (leftRows && leftRows.length === 2) layoutState.leftRows = leftRows;
+            } catch {
+                return;
+            }
+        }
+
+        function saveLayoutState() {
+            localStorage.setItem(LAYOUT_KEY, JSON.stringify(layoutState));
+        }
+
+        function applyLayoutState() {
+            const layout = document.getElementById("board-layout");
+            const leftColumn = document.getElementById("left-column");
+            if (!layout || !leftColumn) return;
+
+            const displayOptions = getDisplayOptions();
+            const columnValues = displayOptions.meal
+                ? layoutState.columns
+                : [layoutState.columns[0], Number((layoutState.columns[1] + layoutState.columns[2]).toFixed(4))];
+
+            layout.style.gridTemplateColumns = columnValues
+                .map((value) => `minmax(0, ${value}fr)`)
+                .join(" ");
+            leftColumn.style.gridTemplateRows = layoutState.leftRows
+                .map((value) => `minmax(0, ${value}fr)`)
+                .join(" ");
+        }
+
+        function getAreaScale(element, baseWidth, baseHeight, minScale, maxScale) {
+            if (!element) return 1;
+            const width = Math.max(1, element.clientWidth);
+            const height = Math.max(1, element.clientHeight);
+            const widthScale = width / baseWidth;
+            const heightScale = height / baseHeight;
+            return clampNumber(Math.min(widthScale, heightScale), minScale, maxScale);
+        }
+
+        function contentFitsElement(element) {
+            return element.scrollWidth <= element.clientWidth + 2 &&
+                element.scrollHeight <= element.clientHeight + 2;
+        }
+
+        function fitPanelScale(element, cssVar, preferredScale, minScale, maxScale) {
+            if (!element) return 1;
+
+            let low = minScale;
+            let high = clampNumber(preferredScale, minScale, maxScale);
+            let best = low;
+
+            for (let step = 0; step < 10; step += 1) {
+                const mid = (low + high) / 2;
+                element.style.setProperty(cssVar, mid.toFixed(4));
+                void element.offsetHeight;
+
+                if (contentFitsElement(element)) {
+                    best = mid;
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+
+            element.style.setProperty(cssVar, best.toFixed(4));
+            return best;
+        }
+
+        function fitHeroWeatherScale(hero) {
+            if (!hero) return 1;
+
+            hero.style.setProperty("--weather-scale", "1");
+            void hero.offsetHeight;
+
+            if (contentFitsElement(hero)) return 1;
+
+            let low = 0.5;
+            let high = 1;
+            let best = low;
+
+            for (let step = 0; step < 10; step += 1) {
+                const mid = (low + high) / 2;
+                hero.style.setProperty("--weather-scale", mid.toFixed(4));
+                void hero.offsetHeight;
+
+                if (contentFitsElement(hero)) {
+                    best = mid;
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+
+            hero.style.setProperty("--weather-scale", best.toFixed(4));
+            return best;
+        }
+
+        function updatePanelScales() {
+            const hero = document.getElementById("hero-panel");
+            const status = document.getElementById("status-panel");
+            const schedule = document.getElementById("schedule-panel");
+            const meal = document.getElementById("meal-panel");
+
+            if (hero) {
+                const preferred = getAreaScale(hero, 960, 620, 0.3, 1.8);
+                hero.style.setProperty("--hero-scale", preferred.toFixed(4));
+                fitHeroWeatherScale(hero);
+            }
+            if (status) {
+                const preferred = getAreaScale(status, 960, 250, 0.45, 1.6);
+                fitPanelScale(status, "--status-scale", preferred, 0.45, 1.6);
+            }
+            if (schedule) {
+                const preferred = getAreaScale(schedule, 520, 760, 0.45, 1.6);
+                fitPanelScale(schedule, "--schedule-scale", preferred, 0.45, 1.6);
+            }
+            if (meal) {
+                const preferred = getAreaScale(meal, 220, 760, 0.4, 1.9);
+                fitPanelScale(meal, "--meal-scale", preferred, 0.4, 1.9);
+            }
+        }
+
+        function updateResizeHandles() {
+            const layout = document.getElementById("board-layout");
+            const leftColumn = document.getElementById("left-column");
+            const scheduleColumn = document.getElementById("schedule-column");
+            const hero = document.getElementById("hero-panel");
+            const resizeLeftMiddle = document.getElementById("resize-left-middle");
+            const resizeMiddleRight = document.getElementById("resize-middle-right");
+            const resizeLeftRows = document.getElementById("resize-left-rows");
+            const displayOptions = getDisplayOptions();
+
+            if (!layout || !leftColumn || !scheduleColumn || !hero || !resizeLeftMiddle || !resizeMiddleRight || !resizeLeftRows) return;
+
+            const layoutRect = layout.getBoundingClientRect();
+            const leftRect = leftColumn.getBoundingClientRect();
+            const scheduleRect = scheduleColumn.getBoundingClientRect();
+            const heroRect = hero.getBoundingClientRect();
+            const layoutStyle = getComputedStyle(layout);
+            const leftStyle = getComputedStyle(leftColumn);
+            const columnGap = parseFloat(layoutStyle.columnGap || layoutStyle.gap || "0") || 0;
+            const rowGap = parseFloat(leftStyle.rowGap || leftStyle.gap || "0") || 0;
+            const handleWidth = resizeLeftMiddle.offsetWidth || 24;
+            const handleHeight = resizeLeftRows.offsetHeight || 24;
+
+            const firstBoundary = leftRect.right - layoutRect.left + columnGap / 2;
+            const secondBoundary = scheduleRect.right - layoutRect.left + columnGap / 2;
+            const rowBoundary = heroRect.bottom - layoutRect.top + rowGap / 2;
+
+            resizeLeftMiddle.style.left = `${firstBoundary - handleWidth / 2}px`;
+            resizeLeftMiddle.style.top = "0px";
+            resizeLeftMiddle.style.height = `${layoutRect.height}px`;
+
+            resizeMiddleRight.classList.toggle("is-hidden", !displayOptions.meal);
+            if (displayOptions.meal) {
+                resizeMiddleRight.style.left = `${secondBoundary - handleWidth / 2}px`;
+                resizeMiddleRight.style.top = "0px";
+                resizeMiddleRight.style.height = `${layoutRect.height}px`;
+            }
+
+            resizeLeftRows.style.left = `${leftRect.left - layoutRect.left}px`;
+            resizeLeftRows.style.top = `${rowBoundary - handleHeight / 2}px`;
+            resizeLeftRows.style.width = `${leftRect.width}px`;
+        }
+
+        function syncResizeButton() {
+            const button = document.getElementById("toggle-resize-mode");
+            const board = document.querySelector(".board");
+            if (!button || !board) return;
+            button.textContent = resizeMode ? "조절 종료" : "크기 조절";
+            board.classList.toggle("resize-mode", resizeMode);
+            updateResizeHandles();
+        }
+
+        function beginResize(type, event) {
+            if (!resizeMode) return;
+
+            const layout = document.getElementById("board-layout");
+            const leftColumn = document.getElementById("left-column");
+            const scheduleColumn = document.getElementById("schedule-column");
+            const mealColumn = document.getElementById("meal-column");
+            const hero = document.getElementById("hero-panel");
+            const status = document.getElementById("status-panel");
+            if (!layout || !leftColumn || !scheduleColumn || !mealColumn || !hero || !status) return;
+
+            event.preventDefault();
+            const displayOptions = getDisplayOptions();
+            const totalRightState = layoutState.columns[1] + layoutState.columns[2];
+            activeResize = {
+                type,
+                startX: event.clientX,
+                startY: event.clientY,
+                leftWidth: leftColumn.getBoundingClientRect().width,
+                middleWidth: scheduleColumn.getBoundingClientRect().width,
+                rightWidth: mealColumn.getBoundingClientRect().width,
+                mealVisible: displayOptions.meal,
+                middleShare: totalRightState > 0 ? layoutState.columns[1] / totalRightState : 1,
+                heroHeight: hero.getBoundingClientRect().height,
+                statusHeight: status.getBoundingClientRect().height
+            };
+            document.body.classList.add("is-resizing");
+        }
+
+        function onResizeMove(event) {
+            if (!activeResize) return;
+
+            const minLeft = 320;
+            const minMiddle = 260;
+            const minRight = 160;
+            const minHero = 220;
+            const minStatus = 150;
+
+            if (activeResize.type === "left-middle") {
+                const combinedMin = activeResize.mealVisible ? minMiddle : (minMiddle + minRight);
+                const total = activeResize.leftWidth + activeResize.middleWidth;
+                const nextLeft = clampNumber(activeResize.leftWidth + (event.clientX - activeResize.startX), minLeft, total - combinedMin);
+                const nextMiddleArea = total - nextLeft;
+                if (activeResize.mealVisible) {
+                    layoutState.columns = [nextLeft, nextMiddleArea, activeResize.rightWidth];
+                } else {
+                    const nextMiddle = clampNumber(nextMiddleArea * activeResize.middleShare, minMiddle, nextMiddleArea - minRight);
+                    const nextRight = nextMiddleArea - nextMiddle;
+                    layoutState.columns = [nextLeft, nextMiddle, nextRight];
+                }
+            } else if (activeResize.type === "middle-right") {
+                const total = activeResize.middleWidth + activeResize.rightWidth;
+                const nextMiddle = clampNumber(activeResize.middleWidth + (event.clientX - activeResize.startX), minMiddle, total - minRight);
+                const nextRight = total - nextMiddle;
+                layoutState.columns = [activeResize.leftWidth, nextMiddle, nextRight];
+            } else if (activeResize.type === "left-rows") {
+                const total = activeResize.heroHeight + activeResize.statusHeight;
+                const nextHero = clampNumber(activeResize.heroHeight + (event.clientY - activeResize.startY), minHero, total - minStatus);
+                const nextStatus = total - nextHero;
+                layoutState.leftRows = [nextHero, nextStatus];
+            }
+
+            applyLayoutState();
+            updatePanelScales();
+            updateResizeHandles();
+            requestViewportFit();
+        }
+
+        function endResize() {
+            if (!activeResize) return;
+            activeResize = null;
+            document.body.classList.remove("is-resizing");
+            saveLayoutState();
+            requestViewportFit();
+        }
+
+        function clampSheetPosition(sheet, left, top) {
+            const padding = 8;
+            const maxLeft = Math.max(padding, window.innerWidth - sheet.offsetWidth - padding);
+            const maxTop = Math.max(padding, window.innerHeight - sheet.offsetHeight - padding);
+            return {
+                left: clampNumber(left, padding, maxLeft),
+                top: clampNumber(top, padding, maxTop)
+            };
+        }
+
+        function setSheetPosition(sheet, left, top) {
+            if (!sheet) return;
+            const next = clampSheetPosition(sheet, left, top);
+            sheet.style.left = `${next.left}px`;
+            sheet.style.top = `${next.top}px`;
+        }
+
+        function centerOverlaySheet(overlay) {
+            const sheet = overlay?.querySelector(".sheet");
+            if (!sheet) return;
+            const left = (window.innerWidth - sheet.offsetWidth) / 2;
+            const top = (window.innerHeight - sheet.offsetHeight) / 2;
+            setSheetPosition(sheet, left, top);
+        }
+
+        function clampOpenOverlaySheets() {
+            document.querySelectorAll(".overlay").forEach((overlay) => {
+                if (getComputedStyle(overlay).display === "none") return;
+                const sheet = overlay.querySelector(".sheet");
+                if (!sheet) return;
+                const rect = sheet.getBoundingClientRect();
+                setSheetPosition(sheet, rect.left, rect.top);
+            });
+        }
+
+        function openOverlay(overlayId) {
+            const overlay = document.getElementById(overlayId);
+            if (!overlay) return;
+            overlay.style.display = "flex";
+            window.requestAnimationFrame(() => centerOverlaySheet(overlay));
+        }
+
+        function closeOverlay(overlayId) {
+            const overlay = document.getElementById(overlayId);
+            if (!overlay) return;
+            overlay.style.display = "none";
+            if (activeSheetDrag && activeSheetDrag.overlay === overlay) {
+                endSheetDrag();
+            }
+        }
+
+        function beginSheetDrag(event) {
+            if (event.button !== 0 && event.pointerType !== "touch" && event.pointerType !== "pen") return;
+            if (event.target.closest("button, input, select, textarea, label, a")) return;
+            if (activeResize) return;
+
+            const handle = event.currentTarget;
+            const sheet = handle.closest(".sheet");
+            const overlay = handle.closest(".overlay");
+            if (!sheet || !overlay) return;
+
+            const rect = sheet.getBoundingClientRect();
+            activeSheetDrag = {
+                sheet,
+                overlay,
+                startX: event.clientX,
+                startY: event.clientY,
+                startLeft: rect.left,
+                startTop: rect.top
+            };
+
+            sheet.classList.add("dragging");
+            document.body.classList.add("is-dragging-sheet");
+            event.preventDefault();
+        }
+
+        function onSheetDragMove(event) {
+            if (!activeSheetDrag) return;
+            const nextLeft = activeSheetDrag.startLeft + (event.clientX - activeSheetDrag.startX);
+            const nextTop = activeSheetDrag.startTop + (event.clientY - activeSheetDrag.startY);
+            setSheetPosition(activeSheetDrag.sheet, nextLeft, nextTop);
+        }
+
+        function endSheetDrag() {
+            if (!activeSheetDrag) return;
+            activeSheetDrag.sheet.classList.remove("dragging");
+            document.body.classList.remove("is-dragging-sheet");
+            activeSheetDrag = null;
+        }
+
+        function toggleResizeMode() {
+            resizeMode = !resizeMode;
+            syncResizeButton();
+        }
+
+        function bindConfig() {
+            const info = globalData.schoolInfo || {};
+            const schoolNameParts = splitSchoolName(info["학교명"]);
+            const classParts = extractGradeClass(info);
+            CONFIG.LATITUDE = parseFloat(info["학교 위도"]) || null;
+            CONFIG.LONGITUDE = parseFloat(info["학교 경도"]) || null;
+            CONFIG.NEIS_API_KEY = info["나이스 API"] || "";
+            CONFIG.SCHOOL_NAME = info["학교명"] || "";
+            CONFIG.SCHOOL_NAME_ONLY = schoolNameParts.name;
+            CONFIG.CLASS_NAME = composeClassName(classParts.grade, classParts.classNum, info["학년 반"] || "");
+
+            const codeMatch = String(CONFIG.SCHOOL_NAME).match(/ATPT_OFCDC_SC_CODE=([A-Z0-9]+)/);
+            CONFIG.REGION_CODE = codeMatch ? codeMatch[1] : "";
+
+            document.getElementById("school-badge").textContent = CONFIG.SCHOOL_NAME_ONLY || "전자칠판 대시보드";
+            document.getElementById("class-badge").textContent = CONFIG.CLASS_NAME || "학년 반";
+        }
+
+        function escapeFontFamilyName(value) {
+            return String(value || "").replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+        }
+
+        function normalizeFontChoice(choice) {
+            const text = String(choice || "").trim();
+            if (FONT_OPTIONS[text]) return text;
+            if (text.startsWith("local:") && text.slice(6).trim()) return text;
+            return DEFAULT_FONT_CHOICE;
+        }
+
+        function getFontChoice() {
+            return normalizeFontChoice(localStorage.getItem(FONT_KEY));
+        }
+
+        function normalizeClockChoice(choice) {
+            const next = {
+                digital: choice?.digital !== false,
+                analog: choice?.analog !== false
+            };
+            if (!next.digital && !next.analog) next.digital = true;
+            return next;
+        }
+
+        function getClockChoice() {
+            try {
+                return normalizeClockChoice(JSON.parse(localStorage.getItem(CLOCK_KEY) || ""));
+            } catch {
+                return normalizeClockChoice({ digital: true, analog: true });
+            }
+        }
+
+        function applyClockChoice(choice) {
+            const normalized = normalizeClockChoice(choice);
+            const row = document.getElementById("time-row");
+            const digital = document.getElementById("digital-clock-wrap");
+            const analog = document.getElementById("analog-clock-wrap");
+            if (!row || !digital || !analog) return normalized;
+
+            digital.classList.toggle("is-hidden", !normalized.digital);
+            analog.classList.toggle("is-hidden", !normalized.analog);
+            row.classList.toggle("single-clock", normalized.digital !== normalized.analog);
+            return normalized;
+        }
+
+        function syncClockInputs(choice = getClockChoice()) {
+            const normalized = normalizeClockChoice(choice);
+            const digitalInput = document.getElementById("settings-show-digital");
+            const analogInput = document.getElementById("settings-show-analog");
+            if (digitalInput) digitalInput.checked = normalized.digital;
+            if (analogInput) analogInput.checked = normalized.analog;
+            return normalized;
+        }
+
+        function syncDisplayInputs(options = getDisplayOptions()) {
+            const normalized = normalizeDisplayOptions(options);
+            const morningInput = document.getElementById("settings-show-morning-activity");
+            const mealInput = document.getElementById("settings-show-meal");
+            const guidanceInput = document.getElementById("settings-show-guidance");
+            if (morningInput) morningInput.checked = normalized.morningActivity;
+            if (mealInput) mealInput.checked = normalized.meal;
+            if (guidanceInput) guidanceInput.checked = normalized.guidance;
+            return normalized;
+        }
+
+        function applyDisplayOptions(options = getDisplayOptions()) {
+            const normalized = normalizeDisplayOptions(options);
+            const statusPanel = document.getElementById("status-panel");
+            const guidanceBlock = document.querySelector(".status-guidance");
+            const mealColumn = document.getElementById("meal-column");
+            const layout = document.getElementById("board-layout");
+
+            if (statusPanel) statusPanel.classList.toggle("guidance-hidden", !normalized.guidance);
+            if (guidanceBlock) guidanceBlock.classList.toggle("is-hidden", !normalized.guidance);
+            if (mealColumn) mealColumn.classList.toggle("is-hidden", !normalized.meal);
+            if (layout) layout.classList.toggle("meal-hidden", !normalized.meal);
+            applyLayoutState();
+            return normalized;
+        }
+
+        function getFontFamilyForChoice(choice) {
+            const normalized = normalizeFontChoice(choice);
+            if (FONT_OPTIONS[normalized]) return FONT_OPTIONS[normalized].family;
+            if (normalized.startsWith("local:")) {
+                return `"${escapeFontFamilyName(normalized.slice(6))}", ${FONT_FALLBACK}`;
+            }
+            return FONT_OPTIONS[DEFAULT_FONT_CHOICE].family;
+        }
+
+        function getFontLabelForChoice(choice) {
+            const normalized = normalizeFontChoice(choice);
+            if (FONT_OPTIONS[normalized]) return FONT_OPTIONS[normalized].label;
+            if (normalized.startsWith("local:")) return normalized.slice(6);
+            return FONT_OPTIONS[DEFAULT_FONT_CHOICE].label;
+        }
+
+        function createFontOption(value, label, family) {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = label;
+            option.style.fontFamily = family;
+            return option;
+        }
+
+        function rebuildFontSelect(selectedChoice = getFontChoice()) {
+            const select = document.getElementById("settings-font");
+            if (!select) return;
+
+            const normalized = normalizeFontChoice(selectedChoice);
+            select.innerHTML = "";
+
+            Object.entries(FONT_OPTIONS).forEach(([value, option]) => {
+                select.appendChild(createFontOption(value, option.label, option.family));
+            });
+
+            if (localFontChoices.length) {
+                const group = document.createElement("optgroup");
+                group.label = "윈도 한글 서체";
+                localFontChoices.forEach((font) => {
+                    group.appendChild(createFontOption(font.value, font.label, font.family));
+                });
+                select.appendChild(group);
+            }
+
+            if (!Array.from(select.options).some((option) => option.value === normalized) && normalized.startsWith("local:")) {
+                const familyName = normalized.slice(6);
+                select.appendChild(createFontOption(normalized, familyName, getFontFamilyForChoice(normalized)));
+            }
+
+            select.value = Array.from(select.options).some((option) => option.value === normalized)
+                ? normalized
+                : DEFAULT_FONT_CHOICE;
+        }
+
+        async function loadLocalFontChoices() {
+            if (localFontsLoaded || localFontsLoading || typeof window.queryLocalFonts !== "function") {
+                rebuildFontSelect();
+                return;
+            }
+
+            localFontsLoading = true;
+            try {
+                const localFonts = await window.queryLocalFonts();
+                const seen = new Set();
+                localFontChoices = localFonts
+                    .map((font) => String(font.family || "").trim())
+                    .filter(Boolean)
+                    .filter((family) => {
+                        const key = family.toLowerCase();
+                        if (seen.has(key)) return false;
+                        seen.add(key);
+                        return true;
+                    })
+                    .filter((family) => {
+                        if (!document.fonts || typeof document.fonts.check !== "function") return true;
+                        return document.fonts.check(`16px "${escapeFontFamilyName(family)}"`, "가나다라마바사아자차카타파하한글학교");
+                    })
+                    .sort((a, b) => a.localeCompare(b, "ko"))
+                    .map((family) => ({
+                        value: `local:${family}`,
+                        label: family,
+                        family: getFontFamilyForChoice(`local:${family}`)
+                    }));
+                localFontsLoaded = true;
+            } catch {
+                localFontChoices = [];
+            } finally {
+                localFontsLoading = false;
+                rebuildFontSelect();
+            }
+        }
+
+        function applyFontChoice(choice) {
+            document.documentElement.style.setProperty("--font-main", getFontFamilyForChoice(choice));
+        }
+
+        function populateSettingsForm() {
+            if (!globalData) return;
+
+            const info = globalData.schoolInfo || {};
+            const schoolNameParts = splitSchoolName(info["학교명"]);
+            const classParts = extractGradeClass(info);
+            const morningActivities = globalData.morningActivities || MORNING_ACTIVITIES;
+            const clockChoice = getClockChoice();
+
+            document.getElementById("settings-school-name").value = schoolNameParts.name || "";
+            document.getElementById("settings-grade").value = classParts.grade || "";
+            document.getElementById("settings-class").value = classParts.classNum || "";
+            document.getElementById("settings-neis-api").value = info["나이스 API"] || "";
+            document.getElementById("settings-latitude").value = info["학교 위도"] || "";
+            document.getElementById("settings-longitude").value = info["학교 경도"] || "";
+            document.getElementById("settings-daily-guidance").value = getManualDailyGuidance(getNow(), globalData)?.text || "";
+            rebuildFontSelect(getFontChoice());
+            syncClockInputs(clockChoice);
+            syncDisplayInputs(getDisplayOptions(globalData));
+
+            for (let day = 1; day <= 5; day += 1) {
+                const input = document.getElementById(`morning-${day}`);
+                if (input) input.value = morningActivities[day] || "";
+            }
+        }
+
+        function buildScheduleDynamic() {
+            scheduleDynamic = [];
+            const rows = Array.isArray(globalData.timeSchedule) ? globalData.timeSchedule : [];
+            for (let i = 0; i < rows.length - 1; i += 1) {
+                const item = rows[i];
+                const next = rows[i + 1];
+                const type = item.type || inferScheduleType(item);
+                scheduleDynamic.push({ label: item.label, type, start: item.startTime, end: next.startTime });
+            }
+        }
+
+        function getMorningActivity(day) {
+            const morningActivities = globalData?.morningActivities || MORNING_ACTIVITIES;
+            return morningActivities[day] || MORNING_ACTIVITIES[day] || "독서";
+        }
+
+        function getScheduleEditorRows(rows) {
+            const sourceRows = (Array.isArray(rows) ? rows : []).map((item) => ({ ...item }));
+            const lastIndex = sourceRows.length - 1;
+            const endIndex = lastIndex >= 0 && (sourceRows[lastIndex].type === "end" || inferScheduleType(sourceRows[lastIndex]) === "end")
+                ? lastIndex
+                : sourceRows.length;
+
+            sourceRows.splice(endIndex, 0, {
+                startTime: "",
+                label: "",
+                type: "class",
+                isExtra: true
+            });
+
+            return sourceRows;
+        }
+
+        function populateScheduleEditor() {
+            const list = document.getElementById("schedule-editor-list");
+            if (!list) return;
+
+            const rows = Array.isArray(globalData?.timeSchedule)
+                ? globalData.timeSchedule
+                : [];
+
+            const editorRows = getScheduleEditorRows(rows);
+
+            list.innerHTML = editorRows.map((item, index) => {
+                const type = item.type || inferScheduleType(item);
+                const options = SCHEDULE_TYPE_OPTIONS.map((option) => `
+                    <option value="${option.value}"${option.value === type ? " selected" : ""}>${option.label}</option>
+                `).join("");
+
+                return `
+                    <div class="schedule-edit-row" data-schedule-editor-row="${index}" data-extra-row="${item.isExtra ? "true" : "false"}" data-original-time="${escapeHtml(item.startTime || "")}" data-original-label="${escapeHtml(item.label || "")}" data-original-type="${escapeHtml(type)}">
+                        <label class="field-group">
+                            <span>${item.isExtra ? "추가 시간" : "시작 시간"}</span>
+                            <input data-field="time" id="schedule-time-${index}" class="setting-input" type="time" value="${item.isExtra ? "" : escapeHtml(normalizeScheduleTimeText(item.startTime || "08:30"))}">
+                        </label>
+                        <label class="field-group">
+                            <span>${item.isExtra ? "추가 활동 내용" : "활동 내용"}</span>
+                            <input data-field="label" id="schedule-label-${index}" class="setting-input" type="text" value="${escapeHtml(item.label || "")}" placeholder="${item.isExtra ? "새 일정 내용을 입력하세요" : ""}">
+                        </label>
+                        <label class="field-group">
+                            <span>구분</span>
+                            <select data-field="type" id="schedule-type-${index}" class="setting-input">${options}</select>
+                        </label>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function toTodayDate(hhmm, baseDate = getNow()) {
+            const [h, m] = String(hhmm).split(":").map(Number);
+            return new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), h || 0, m || 0, 0);
+        }
+
+        function getTodayEvents(now = getNow()) {
+            return scheduleDynamic.map((item) => ({
+                ...item,
+                startObj: toTodayDate(item.start, now),
+                endObj: toTodayDate(item.end, now)
+            }));
+        }
+
+        function getScheduleSubtext(item, day) {
+            if (item.type === "morning") return "독서 시간";
+            if (item.type === "lunch") return "점심·쉬는 시간";
+            if (item.type === "class") return "수업 시간";
+            return "이동·쉬는 시간";
+        }
+
+        function getScheduleExtraText(item, day) {
+            if (!getDisplayOptions().morningActivity) return "";
+            if (item.type === "morning") return getMorningActivity(day);
+            return "";
+        }
+
+        function getScheduleDisplayLabel(item) {
+            return String(item.label || "");
+        }
+
+        function setFitScale(scale) {
+            document.documentElement.style.setProperty("--fit-scale", scale.toFixed(4));
+        }
+
+        function getFitTargets() {
+            return [
+                document.querySelector(".board"),
+                document.querySelector(".layout"),
+                document.querySelector(".hero"),
+                document.querySelector(".status"),
+                document.querySelector(".schedule-panel"),
+                document.querySelector(".meal-panel"),
+                document.getElementById("schedule-list"),
+                document.getElementById("meal-list")
+            ].filter(Boolean);
+        }
+
+        function contentFitsViewport() {
+            return getFitTargets().every((element) =>
+                element.scrollWidth <= element.clientWidth + 2 &&
+                element.scrollHeight <= element.clientHeight + 2
+            );
+        }
+
+        function updateViewportFit() {
+            if (!window.matchMedia("(orientation: landscape)").matches) {
+                setFitScale(1);
+                updatePanelScales();
+                updateResizeHandles();
+                return;
+            }
+
+            const root = document.querySelector(".board");
+            if (!root) return;
+
+            let low = 0.22;
+            let high = 2.6;
+            let best = low;
+
+            for (let step = 0; step < 14; step += 1) {
+                const mid = (low + high) / 2;
+                setFitScale(mid);
+                updatePanelScales();
+                void root.offsetHeight;
+                if (contentFitsViewport()) {
+                    best = mid;
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+
+            setFitScale(best);
+            updatePanelScales();
+            updateResizeHandles();
+        }
+
+        function requestViewportFit() {
+            window.cancelAnimationFrame(fitFrame);
+            fitFrame = window.requestAnimationFrame(updateViewportFit);
+        }
+
+        function formatHour12(hhmm) {
+            const [hourText, minuteText] = String(hhmm || "").split(":");
+            const hour = Number(hourText);
+            if (!Number.isFinite(hour) || minuteText === undefined) return String(hhmm || "");
+            return `${hour % 12 || 12}:${minuteText}`;
+        }
+
+        function renderSchedule() {
+            const list = document.getElementById("schedule-list");
+            const note = document.getElementById("schedule-note");
+            const day = getNow().getDay();
+
+            if (!scheduleDynamic.length) {
+                list.style.gridTemplateRows = "";
+                list.innerHTML = `<div class="empty">시정표 정보가 없습니다.</div>`;
+                note.textContent = "데이터 필요";
+                requestViewportFit();
+                return;
+            }
+
+            note.textContent = "현재 시간 반영";
+            list.style.gridTemplateRows = `repeat(${scheduleDynamic.length}, minmax(0, 1fr))`;
+            list.innerHTML = scheduleDynamic.map((item, index) => `
+                <div class="schedule-item" data-schedule-index="${index}">
+                    <div class="schedule-time">${formatHour12(item.start)}~${formatHour12(item.end)}</div>
+                    <div class="schedule-line">
+                        <div class="schedule-label-row">
+                            <span class="schedule-label">${getScheduleDisplayLabel(item)}</span>
+                            ${index === 0 && getScheduleExtraText(item, day) ? `<span class="schedule-extra">${getScheduleExtraText(item, day)}</span>` : ""}
+                        </div>
+                        <span class="schedule-sub">${getScheduleSubtext(item, day)}</span>
+                    </div>
+                </div>
+            `).join("");
+
+            updateScheduleHighlight(getNow(), getTodayEvents(getNow()));
+            requestViewportFit();
+        }
+
+        function updateScheduleHighlight(now = getNow(), events = getTodayEvents(now)) {
+            const items = document.querySelectorAll("[data-schedule-index]");
+            if (!items.length) return;
+
+            let currentIndex = -1;
+            events.forEach((item, index) => {
+                if (now >= item.startObj && now < item.endObj) currentIndex = index;
+            });
+
+            items.forEach((element, index) => {
+                const isPast = currentIndex !== -1 ? index < currentIndex : events[index] && now >= events[index].endObj;
+                element.classList.toggle("current", index === currentIndex);
+                element.classList.toggle("past", isPast);
+            });
+        }
+
+        function remainText(seconds) {
+            if (seconds <= 0) return "곧";
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            if (h > 0) return `${h}시간 ${m}분`;
+            if (m > 0) return `${m}분`;
+            return `${s}초`;
+        }
+
+        function updateAnalogClock(now = getNow()) {
+            const hourHand = document.getElementById("analog-hour");
+            const minuteHand = document.getElementById("analog-minute");
+            const secondHand = document.getElementById("analog-second");
+            if (!hourHand || !minuteHand || !secondHand) return;
+
+            const hourRotation = ((now.getHours() % 12) + now.getMinutes() / 60 + now.getSeconds() / 3600) * 30;
+            const minuteRotation = (now.getMinutes() + now.getSeconds() / 60) * 6;
+            const secondRotation = now.getSeconds() * 6;
+
+            hourHand.style.transform = `translateX(-50%) rotate(${hourRotation}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minuteRotation}deg)`;
+            secondHand.style.transform = `translateX(-50%) rotate(${secondRotation}deg)`;
+        }
+
+        function updateClockAndStatus() {
+            const now = getNow();
+            syncAutoTheme(now);
+            updateDailyGuidance(now);
+            const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+            const hour12 = now.getHours() % 12 || 12;
+            document.getElementById("time-text").textContent = `${hour12}:${String(now.getMinutes()).padStart(2, "0")}`;
+            updateAnalogClock(now);
+            document.getElementById("date-text").textContent = `${now.getFullYear()}년 ${now.getMonth() + 1}월 ${now.getDate()}일 ${weekdays[now.getDay()]}요일`;
+
+            const statusEl = document.getElementById("status-text");
+            if (!scheduleDynamic.length) {
+                statusEl.textContent = "운영 시간 정보가 아직 없습니다.";
+                return;
+            }
+
+            const events = getTodayEvents(now);
+            updateScheduleHighlight(now, events);
+
+            if (now.getDay() === 0 || now.getDay() === 6) {
+                statusEl.textContent = "주말입니다. 다음 수업 준비를 천천히 해보세요.";
+                return;
+            }
+
+            const current = events.find((item) => now >= item.startObj && now < item.endObj);
+            const next = events.find((item) => item.startObj > now);
+
+            if (!current && next) {
+                if (next.type === "morning") {
+                    statusEl.textContent = getDisplayOptions().morningActivity
+                        ? `아침 자습 시작까지 ${remainText(Math.floor((next.startObj - now) / 1000))} 남았습니다. 독서나 ${getMorningActivity(now.getDay())} 준비를 해보세요.`
+                        : `아침 자습 시작까지 ${remainText(Math.floor((next.startObj - now) / 1000))} 남았습니다. 독서 준비를 해보세요.`;
+                    return;
+                }
+                statusEl.textContent = `${next.label} 시작까지 ${remainText(Math.floor((next.startObj - now) / 1000))} 남았습니다.`;
+                return;
+            }
+
+            if (!current && !next) {
+                statusEl.textContent = "오늘 수업 일정이 모두 마무리되었습니다.";
+                return;
+            }
+
+            if (current.type === "morning") {
+                statusEl.textContent = getDisplayOptions().morningActivity
+                    ? `아침 자습 시간입니다. 독서를 하거나 오늘의 아침활동 ${getMorningActivity(now.getDay())}을 진행해보세요. ${remainText(Math.floor((current.endObj - now) / 1000))} 남았습니다.`
+                    : `아침 자습 시간입니다. 독서를 진행해보세요. ${remainText(Math.floor((current.endObj - now) / 1000))} 남았습니다.`;
+                return;
+            }
+
+            if (current.type === "class") {
+                statusEl.textContent = `${current.label} 진행 중입니다. 종료까지 ${remainText(Math.floor((current.endObj - now) / 1000))} 남았습니다.`;
+                return;
+            }
+
+            if (current.type === "lunch") {
+                statusEl.textContent = `점심 시간입니다. 다음 일정까지 ${remainText(Math.floor((current.endObj - now) / 1000))} 남았습니다.`;
+                return;
+            }
+
+            if (next) {
+                statusEl.textContent = `${current.label}입니다. 다음 일정 ${next.label}까지 ${remainText(Math.floor((next.startObj - now) / 1000))} 남았습니다.`;
+                return;
+            }
+
+            statusEl.textContent = `${current.label}입니다. 오늘 일정 마무리까지 차분하게 진행해보세요.`;
+        }
+        
+        function weatherLabel(code) {
+            if ([0].includes(code)) return "맑음";
+            if ([1, 2].includes(code)) return "대체로 맑음";
+            if ([3].includes(code)) return "흐림";
+            if ([45, 48].includes(code)) return "안개";
+            if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "비";
+            if ([71, 73, 75, 77, 85, 86].includes(code)) return "눈";
+            if ([95, 96, 99].includes(code)) return "뇌우";
+            return "확인 중";
+        }
+
+        function dustLabel(value) {
+            if (Number.isNaN(value) || value == null) return "정보 없음";
+            if (value <= 30) return "좋음";
+            if (value <= 80) return "보통";
+            if (value <= 150) return "나쁨";
+            return "매우 나쁨";
+        }
+
+        function dustLevel(value) {
+            if (Number.isNaN(value) || value == null) return -1;
+            if (value <= 30) return 0;
+            if (value <= 80) return 1;
+            if (value <= 150) return 2;
+            return 3;
+        }
+
+        function overallDustLabel(pm10, pm25) {
+            const levels = [dustLevel(pm10), dustLevel(pm25)].filter((value) => value >= 0);
+            if (!levels.length) return "정보 없음";
+            const worst = Math.max(...levels);
+            return ["좋음", "보통", "나쁨", "매우 나쁨"][worst] || "정보 없음";
+        }
+
+        function setWeatherText(current, range, rain, air, airDetail) {
+            document.getElementById("weather-current").textContent = current;
+            document.getElementById("weather-range").textContent = range;
+            document.getElementById("weather-rain").textContent = rain;
+            document.getElementById("weather-air").textContent = air;
+            document.getElementById("weather-air-detail").textContent = airDetail;
+            requestViewportFit();
+        }
+
+        async function updateWeather() {
+            if (!CONFIG.LATITUDE || !CONFIG.LONGITUDE) {
+                setWeatherText("위치 필요", "-", "-", "-", "-");
+                return;
+            }
+
+            try {
+                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.LATITUDE}&longitude=${CONFIG.LONGITUDE}&current=weathercode,temperature_2m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSeoul`);
+                const weatherData = await weatherRes.json();
+                const airRes = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${CONFIG.LATITUDE}&longitude=${CONFIG.LONGITUDE}&current=pm10,pm2_5&timezone=Asia%2FSeoul`);
+                const airData = await airRes.json();
+                const pm10 = Math.round(airData.current?.pm10);
+                const pm25 = Math.round(airData.current?.pm2_5);
+                setWeatherText(
+                    `${weatherLabel(weatherData.current.weathercode)} ${Math.round(weatherData.current.temperature_2m)}°C`,
+                    `${Math.round(weatherData.daily.temperature_2m_max[0])}°C / ${Math.round(weatherData.daily.temperature_2m_min[0])}°C`,
+                    `${weatherData.daily.precipitation_probability_max[0]}%`,
+                    overallDustLabel(pm10, pm25),
+                    `PM10 ${Number.isNaN(pm10) ? "-" : pm10} · PM2.5 ${Number.isNaN(pm25) ? "-" : pm25}`
+                );
+            } catch {
+                setWeatherText("날씨 오류", "-", "-", "-", "-");
+            }
+        }
+
+        function mealDateLabel(dateStr) {
+            const y = Number(dateStr.slice(0, 4));
+            const m = Number(dateStr.slice(4, 6)) - 1;
+            const d = Number(dateStr.slice(6, 8));
+            const date = new Date(y, m, d);
+            const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+            return `${date.getMonth() + 1}/${date.getDate()}(${weekdays[date.getDay()]})`;
+        }
+
+        function setMealEmptyState(list, message) {
+            list.style.gridTemplateRows = "";
+            list.innerHTML = "";
+            const empty = document.createElement("div");
+            empty.className = "empty";
+            empty.textContent = message;
+            list.appendChild(empty);
+            requestViewportFit();
+        }
+
+        async function fetchJsonOrThrow(url) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`네트워크 응답 오류 (${response.status})`);
+            }
+            return response.json();
+        }
+
+        function getNeisResultInfo(servicePayload) {
+            if (!Array.isArray(servicePayload)) return null;
+            const headSection = servicePayload.find((section) => Array.isArray(section?.head));
+            return headSection?.head?.find((item) => item?.RESULT)?.RESULT
+                || servicePayload.find((section) => section?.RESULT)?.RESULT
+                || null;
+        }
+
+        function extractNeisRows(payload, serviceName) {
+            const servicePayload = payload?.[serviceName];
+            if (!Array.isArray(servicePayload)) {
+                if (payload?.RESULT?.MESSAGE) throw new Error(String(payload.RESULT.MESSAGE));
+                throw new Error("나이스 응답 형식을 읽지 못했습니다.");
+            }
+
+            const rowsSection = servicePayload.find((section) => Array.isArray(section?.row));
+            const rows = Array.isArray(rowsSection?.row) ? rowsSection.row : [];
+            const resultInfo = getNeisResultInfo(servicePayload);
+
+            if (rows.length) return rows;
+            if (resultInfo?.MESSAGE && resultInfo?.CODE && resultInfo.CODE !== "INFO-000") {
+                throw new Error(String(resultInfo.MESSAGE));
+            }
+            return [];
+        }
+
+        async function fetchSchoolInfoRows() {
+            const baseUrl = `https://open.neis.go.kr/hub/schoolInfo?KEY=${encodeURIComponent(CONFIG.NEIS_API_KEY)}&Type=json&SCHUL_NM=${encodeURIComponent(CONFIG.SCHOOL_NAME_ONLY)}`;
+            const requestUrls = [];
+
+            if (CONFIG.REGION_CODE) {
+                requestUrls.push(`${baseUrl}&ATPT_OFCDC_SC_CODE=${encodeURIComponent(CONFIG.REGION_CODE)}`);
+            }
+            requestUrls.push(baseUrl);
+
+            let lastError = null;
+            for (const url of Array.from(new Set(requestUrls))) {
+                try {
+                    const schoolData = await fetchJsonOrThrow(url);
+                    const rows = extractNeisRows(schoolData, "schoolInfo");
+                    if (rows.length) return rows;
+                    lastError = new Error("학교명을 찾지 못했습니다. 학교명이나 지역 설정을 확인해 주세요.");
+                } catch (error) {
+                    lastError = error;
+                }
+            }
+
+            throw lastError || new Error("학교 정보를 불러오지 못했습니다.");
+        }
+
+        async function fetchMealData() {
+            const list = document.getElementById("meal-list");
+            const note = document.getElementById("meal-note");
+
+            if (!getDisplayOptions().meal) {
+                note.textContent = "표시 안 함";
+                list.style.gridTemplateRows = "";
+                list.innerHTML = `<div class="empty">급식 숨김</div>`;
+                requestViewportFit();
+                return;
+            }
+
+            if (!CONFIG.NEIS_API_KEY || !CONFIG.SCHOOL_NAME_ONLY) {
+                note.textContent = "학교 정보 필요";
+                setMealEmptyState(list, "학교명과 나이스 API 정보가 있으면 오늘과 내일 급식을 불러올 수 있습니다.");
+                return;
+            }
+
+            note.textContent = "NEIS 연동";
+
+            try {
+                const schoolRows = await fetchSchoolInfoRows();
+                const school = schoolRows[0];
+                const now = getNow();
+                const end = new Date(now);
+                end.setDate(now.getDate() + 1);
+                const ymd = (date) => `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`;
+                const mealData = await fetchJsonOrThrow(`https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${encodeURIComponent(CONFIG.NEIS_API_KEY)}&Type=json&ATPT_OFCDC_SC_CODE=${encodeURIComponent(school.ATPT_OFCDC_SC_CODE || "")}&SD_SCHUL_CODE=${encodeURIComponent(school.SD_SCHUL_CODE || "")}&MLSV_FROM_YMD=${ymd(now)}&MLSV_TO_YMD=${ymd(end)}`);
+                const rows = extractNeisRows(mealData, "mealServiceDietInfo");
+
+                if (!rows.length) {
+                    setMealEmptyState(list, "오늘과 내일 급식 정보가 없습니다.");
+                    return;
+                }
+
+                list.style.gridTemplateRows = `repeat(${rows.length}, minmax(0, 1fr))`;
+                list.innerHTML = rows.map((meal) => {
+                    const clean = String(meal.DDISH_NM || "").replace(/\([^)]*\d[^)]*\)/g, "").replace(/<br\/?>/gi, "\n").trim();
+                    return `<div class="meal-item"><div class="meal-date">${mealDateLabel(meal.MLSV_YMD)}</div><div class="meal-menu">${clean || "메뉴 정보 없음"}</div></div>`;
+                }).join("");
+                requestViewportFit();
+            } catch (error) {
+                note.textContent = "연동 오류";
+                const message = String(error?.message || "급식 정보를 불러오지 못했습니다.").trim();
+                setMealEmptyState(list, message.startsWith("급식 정보를") ? message : `급식 정보를 불러오지 못했습니다. ${message}`);
+            }
+        }
+
+        function refreshAll() {
+            bindConfig();
+            populateSettingsForm();
+            buildScheduleDynamic();
+            applyDisplayOptions();
+            renderSchedule();
+            updateClockAndStatus();
+            updateWeather();
+            fetchMealData();
+            requestViewportFit();
+        }
+
+        function saveBoardData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function saveDisplaySettings() {
+            const nextData = normalizeData(globalData || EMPTY_DATA);
+            const schoolInput = document.getElementById("settings-school-name");
+            const gradeInput = document.getElementById("settings-grade");
+            const classInput = document.getElementById("settings-class");
+            const neisApiInput = document.getElementById("settings-neis-api");
+            const latitudeInput = document.getElementById("settings-latitude");
+            const longitudeInput = document.getElementById("settings-longitude");
+            const dailyGuidanceInput = document.getElementById("settings-daily-guidance");
+            const fontInput = document.getElementById("settings-font");
+            const digitalInput = document.getElementById("settings-show-digital");
+            const analogInput = document.getElementById("settings-show-analog");
+            const morningVisibleInput = document.getElementById("settings-show-morning-activity");
+            const mealVisibleInput = document.getElementById("settings-show-meal");
+            const guidanceVisibleInput = document.getElementById("settings-show-guidance");
+            const previousSchool = splitSchoolName(nextData.schoolInfo["학교명"]);
+            const schoolName = String(schoolInput?.value || "").trim();
+            const grade = String(gradeInput?.value || "").trim().replace(/학년/g, "");
+            const classNum = String(classInput?.value || "").trim().replace(/반/g, "");
+            const latitudeText = String(latitudeInput?.value || "").trim();
+            const longitudeText = String(longitudeInput?.value || "").trim();
+            const dailyGuidanceText = String(dailyGuidanceInput?.value || "").trim();
+
+            nextData.schoolInfo["학교명"] = schoolName
+                ? `${schoolName}${previousSchool.suffix || ""}`
+                : "";
+
+            nextData.schoolInfo["학년"] = grade;
+            nextData.schoolInfo["반"] = classNum;
+            nextData.schoolInfo["학년 반"] = composeClassName(grade, classNum, nextData.schoolInfo["학년 반"] || "");
+            nextData.schoolInfo["나이스 API"] = String(neisApiInput?.value || "").trim();
+            nextData.schoolInfo["학교 위도"] = latitudeText;
+            nextData.schoolInfo["학교 경도"] = longitudeText;
+            if (dailyGuidanceText) {
+                nextData.dailyGuidanceOverride = {
+                    dateSeed: getDateSeed(),
+                    text: dailyGuidanceText
+                };
+            } else {
+                delete nextData.dailyGuidanceOverride;
+            }
+
+            nextData.displayOptions = normalizeDisplayOptions({
+                morningActivity: Boolean(morningVisibleInput?.checked),
+                meal: Boolean(mealVisibleInput?.checked),
+                guidance: Boolean(guidanceVisibleInput?.checked)
+            });
+
+            nextData.morningActivities = { ...(nextData.morningActivities || {}) };
+            for (let day = 1; day <= 5; day += 1) {
+                const input = document.getElementById(`morning-${day}`);
+                nextData.morningActivities[day] = String(input?.value || "").trim();
+            }
+
+            const fontChoice = normalizeFontChoice(fontInput?.value || DEFAULT_FONT_CHOICE);
+            localStorage.setItem(FONT_KEY, fontChoice);
+            applyFontChoice(fontChoice);
+            const clockChoice = normalizeClockChoice({
+                digital: Boolean(digitalInput?.checked),
+                analog: Boolean(analogInput?.checked)
+            });
+            localStorage.setItem(CLOCK_KEY, JSON.stringify(clockChoice));
+            applyClockChoice(clockChoice);
+            syncClockInputs(clockChoice);
+            saveBoardData(nextData);
+            globalData = normalizeData(nextData);
+            refreshAll();
+            closeOverlay("settings-overlay");
+        }
+
+        function openScheduleEditor() {
+            const settingsOverlay = document.getElementById("settings-overlay");
+            reopenSettingsAfterScheduleEditor = Boolean(settingsOverlay && getComputedStyle(settingsOverlay).display !== "none");
+            if (reopenSettingsAfterScheduleEditor) {
+                closeOverlay("settings-overlay");
+            }
+            populateScheduleEditor();
+            openOverlay("schedule-editor-overlay");
+        }
+
+        function closeScheduleEditor() {
+            closeOverlay("schedule-editor-overlay");
+            if (reopenSettingsAfterScheduleEditor) {
+                reopenSettingsAfterScheduleEditor = false;
+                openOverlay("settings-overlay");
+            }
+        }
+
+        function saveScheduleEditor() {
+            const nextData = normalizeData(globalData || EMPTY_DATA);
+            const editorRows = Array.from(document.querySelectorAll("[data-schedule-editor-row]"));
+
+            nextData.timeSchedule = editorRows.reduce((rows, rowElement, index) => {
+                const timeInput = rowElement.querySelector('[data-field="time"]');
+                const labelInput = rowElement.querySelector('[data-field="label"]');
+                const typeInput = rowElement.querySelector('[data-field="type"]');
+                const isExtraRow = rowElement.dataset.extraRow === "true";
+                const originalTime = String(rowElement.dataset.originalTime || "").trim();
+                const originalLabel = String(rowElement.dataset.originalLabel || "").trim();
+                const originalType = String(rowElement.dataset.originalType || "").trim();
+                const rawTime = String(timeInput?.value || "").trim();
+                const rawLabel = String(labelInput?.value || "").trim();
+
+                if (isExtraRow && !rawTime && !rawLabel) return rows;
+                if (isExtraRow && (!rawTime || !rawLabel)) return rows;
+
+                const label = rawLabel || originalLabel || `일정 ${index + 1}`;
+                const type = String(typeInput?.value || "").trim() || originalType || inferScheduleType(label);
+                const startTime = normalizeScheduleTimeText(rawTime || originalTime || "08:30", originalTime || "08:30");
+
+                rows.push({
+                    label,
+                    type,
+                    startTime
+                });
+
+                return rows;
+            }, []);
+
+            saveBoardData(nextData);
+            globalData = normalizeData(nextData);
+            refreshAll();
+            closeScheduleEditor();
+        }
+
+        function loadImportedFile(file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    let content = String(event.target.result || "").trim();
+                    content = content.replace(/^const\s+localData\s*=\s*/, "").replace(/;$/, "").trim();
+                    const parsed = JSON.parse(content);
+                    saveBoardData(parsed);
+                    globalData = normalizeData(parsed);
+                    refreshAll();
+                    closeOverlay("settings-overlay");
+                    alert("전자칠판 데이터를 불러왔습니다.");
+                } catch {
+                    alert("파일 형식을 읽지 못했습니다.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function getThemeChoice() {
+            const saved = localStorage.getItem(THEME_KEY);
+            return saved === "auto" || THEME_ROTATION.includes(saved) ? saved : "auto";
+        }
+
+        function getThemeDayNumber(date = getNow()) {
+            return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000);
+        }
+
+        function getAutoTheme(date = getNow()) {
+            return THEME_ROTATION[getThemeDayNumber(date) % THEME_ROTATION.length];
+        }
+
+        function applyResolvedTheme(themeName) {
+            document.body.classList.remove(...THEME_ROTATION);
+            document.body.classList.add(themeName || "theme-sky");
+        }
+
+        function applyThemeChoice(choice) {
+            const normalized = choice === "auto" ? "auto" : choice;
+            localStorage.setItem(THEME_KEY, normalized);
+            applyResolvedTheme(normalized === "auto" ? getAutoTheme() : normalized);
+        }
+
+        function syncAutoTheme(now = getNow()) {
+            if (getThemeChoice() !== "auto") return;
+            applyResolvedTheme(getAutoTheme(now));
+        }
+
+        function updateFullscreenButton() {
+            const button = document.getElementById("toggle-fullscreen");
+            if (!button) return;
+            button.textContent = document.fullscreenElement ? "전체화면 종료" : "전체화면";
+        }
+
+        async function toggleFullscreen() {
+            try {
+                if (document.fullscreenElement) {
+                    await document.exitFullscreen();
+                } else {
+                    await document.documentElement.requestFullscreen();
+                }
+            } catch {
+                return;
+            }
+            requestViewportFit();
+            updateFullscreenButton();
+        }
+
+        document.getElementById("toggle-resize-mode").addEventListener("click", toggleResizeMode);
+        document.getElementById("open-settings").addEventListener("click", () => {
+            populateSettingsForm();
+            openOverlay("settings-overlay");
+            loadLocalFontChoices();
+        });
+        document.getElementById("open-neis-guide").addEventListener("click", () => {
+            openOverlay("neis-guide-overlay");
+        });
+        document.getElementById("open-location-guide").addEventListener("click", () => {
+            openOverlay("location-guide-overlay");
+        });
+        document.getElementById("toggle-fullscreen").addEventListener("click", toggleFullscreen);
+        document.getElementById("open-schedule-editor").addEventListener("click", openScheduleEditor);
+        document.querySelectorAll("#close-settings, #close-settings-bottom").forEach((button) => {
+            button.addEventListener("click", () => {
+                closeOverlay("settings-overlay");
+            });
+        });
+        document.getElementById("close-neis-guide").addEventListener("click", () => {
+            closeOverlay("neis-guide-overlay");
+        });
+        document.getElementById("close-location-guide").addEventListener("click", () => {
+            closeOverlay("location-guide-overlay");
+        });
+        document.getElementById("close-schedule-editor").addEventListener("click", closeScheduleEditor);
+        document.getElementById("settings-overlay").addEventListener("click", (event) => {
+            if (event.target.id === "settings-overlay") closeOverlay("settings-overlay");
+        });
+        document.getElementById("neis-guide-overlay").addEventListener("click", (event) => {
+            if (event.target.id === "neis-guide-overlay") closeOverlay("neis-guide-overlay");
+        });
+        document.getElementById("location-guide-overlay").addEventListener("click", (event) => {
+            if (event.target.id === "location-guide-overlay") closeOverlay("location-guide-overlay");
+        });
+        document.getElementById("schedule-editor-overlay").addEventListener("click", (event) => {
+            if (event.target.id === "schedule-editor-overlay") closeScheduleEditor();
+        });
+        document.getElementById("save-display-settings").addEventListener("click", saveDisplaySettings);
+        document.getElementById("save-schedule-editor").addEventListener("click", saveScheduleEditor);
+        document.getElementById("daily-guidance-next").addEventListener("click", pickNewDailyGuidance);
+        document.getElementById("resize-left-middle").addEventListener("pointerdown", (event) => beginResize("left-middle", event));
+        document.getElementById("resize-middle-right").addEventListener("pointerdown", (event) => beginResize("middle-right", event));
+        document.getElementById("resize-left-rows").addEventListener("pointerdown", (event) => beginResize("left-rows", event));
+        document.querySelectorAll("[data-theme]").forEach((button) => {
+            button.addEventListener("click", () => applyThemeChoice(button.dataset.theme));
+        });
+        document.getElementById("settings-font").addEventListener("change", (event) => {
+            applyFontChoice(normalizeFontChoice(event.target.value));
+            requestViewportFit();
+        });
+        const previewClockChoice = () => {
+            const choice = applyClockChoice({
+                digital: document.getElementById("settings-show-digital").checked,
+                analog: document.getElementById("settings-show-analog").checked
+            });
+            syncClockInputs(choice);
+            requestViewportFit();
+        };
+        document.getElementById("settings-show-digital").addEventListener("change", previewClockChoice);
+        document.getElementById("settings-show-analog").addEventListener("change", previewClockChoice);
+        document.querySelectorAll(".sheet-head").forEach((handle) => {
+            handle.addEventListener("pointerdown", beginSheetDrag);
+        });
+
+        window.addEventListener("resize", () => {
+            requestViewportFit();
+            clampOpenOverlaySheets();
+        });
+        window.addEventListener("orientationchange", () => {
+            requestViewportFit();
+            clampOpenOverlaySheets();
+        });
+        window.addEventListener("load", () => {
+            requestViewportFit();
+            clampOpenOverlaySheets();
+        });
+        window.addEventListener("pointermove", onResizeMove);
+        window.addEventListener("pointermove", onSheetDragMove);
+        window.addEventListener("pointerup", endResize);
+        window.addEventListener("pointerup", endSheetDrag);
+        window.addEventListener("pointercancel", endResize);
+        window.addEventListener("pointercancel", endSheetDrag);
+        document.addEventListener("fullscreenchange", () => {
+            updateFullscreenButton();
+            requestViewportFit();
+            clampOpenOverlaySheets();
+        });
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(requestViewportFit).catch(() => {});
+        }
+
+        loadLayoutState();
+        applyLayoutState();
+        rebuildFontSelect(getFontChoice());
+        applyFontChoice(getFontChoice());
+        applyClockChoice(getClockChoice());
+        globalData = normalizeData(loadStoredData());
+        refreshAll();
+        applyThemeChoice(getThemeChoice());
+        updateFullscreenButton();
+        syncResizeButton();
+        requestViewportFit();
+        window.setInterval(updateClockAndStatus, 1000);
+    </script>
+<script>window.APP_BACKUP_CONFIG={"app": "time2", "filePrefix": "시간표-백업", "keys": ["electronic-board-settings-stable-v1", "kingmath-board-theme", "kingmath-board-layout", "kingmath-board-font", "kingmath-board-clock", "kingmath-board-daily-guidance-pick"], "jsonKeys": ["electronic-board-settings-stable-v1", "kingmath-board-layout", "kingmath-board-clock", "kingmath-board-daily-guidance-pick"]};</script>
+<script src="./backup.js"></script>
+</body>
+</html>
